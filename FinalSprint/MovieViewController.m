@@ -65,7 +65,7 @@ NSArray *dataArray;
     
     [http retrieveURL:url myBlock:^(NSArray *array)
      {
-         dataArray=array;
+         dataArray=[array valueForKey:@"results"];
          [self addMovies];
          //NSLog(@"%@",[[[array valueForKey:@"results"]objectAtIndex:0]valueForKey:@"title"]);
      }];
@@ -87,6 +87,8 @@ NSArray *dataArray;
             NSManagedObject *newMovie=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.context];
             [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"title"] forKey:@"title"];
             [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"poster_path"] forKey:@"posterPath"];
+            [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"popularity"] forKey:@"popularity"];
+            [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"vote_average"] forKey:@"voteAverage"];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.context save:&error];
@@ -98,10 +100,12 @@ NSArray *dataArray;
 - (void)configureCell:(MovieTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.title.text = movie.title;
+    cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:movie.posterPath]];
+        NSString *path=[NSString stringWithFormat: @"%@%@", imagesDB, movie.posterPath];
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
         UIImage* image = [[UIImage alloc] initWithData:imageData];
         
         if (image) {
@@ -138,7 +142,7 @@ NSArray *dataArray;
     [fetchRequest setEntity:entity];
     
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
-                              initWithKey:@"" ascending:NO];
+                              initWithKey:@"popularity" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
     
     [fetchRequest setFetchBatchSize:10];
