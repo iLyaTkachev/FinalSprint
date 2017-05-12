@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, copy) NSString *backdropPath;
 @property (nonatomic) float popularity;
 @property (nonatomic) int32_t voteCount;
-@property (nonatomic) float vote_average;
+@property (nonatomic) float voteAverage;
 @property (nullable, nonatomic, retain) NSSet<Actor *> *actors;
 
 @end

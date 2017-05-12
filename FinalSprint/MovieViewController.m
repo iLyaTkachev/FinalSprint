@@ -10,6 +10,7 @@
 #import "MovieTableViewCell.h"
 #import "AppDelegate.h"
 #import "HTTPCommunication.h"
+#import "Movie+CoreDataClass.h"
 #import "Constants.h"
 
 @interface MovieViewController ()
@@ -19,12 +20,15 @@
 
 @implementation MovieViewController
 
+NSArray *dataArray;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    dataArray = [[NSArray alloc]init];
     AppDelegate* delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     self.context = delegate.managedObjectContext;
-    
+    [self retrieveInfo];
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
@@ -32,18 +36,7 @@
         exit(-1);  // Fail
     }
     
-    HTTPCommunication *http = [[HTTPCommunication alloc] init];
-    
-    //NSLog(@"%@",dataBaseURL);
-    NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=1"];
-    
-    [http retrieveURL:url myBlock:^(NSArray *array)
-     {
-         //for (int i=0;i<array.count; i++) {
-         NSLog(@"%@",[[[array valueForKey:@"results"]objectAtIndex:0]valueForKey:@"title"]);
-             //NSLog(@"%@",[[array objectAtIndex:i] objectForKey:@"title"]);}
-     }];
-
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,19 +57,56 @@
     return [sectionInfo numberOfObjects];
 }
 
+- (void)retrieveInfo
+{
+    HTTPCommunication *http = [[HTTPCommunication alloc] init];
+    
+    NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=1"];
+    
+    [http retrieveURL:url myBlock:^(NSArray *array)
+     {
+         dataArray=array;
+         [self addMovies];
+         //NSLog(@"%@",[[[array valueForKey:@"results"]objectAtIndex:0]valueForKey:@"title"]);
+     }];
+    
+}
+-(void) addMovies
+{
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
+        NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
+        [fetch setEntity:entity];
+        NSArray * result = [self.context executeFetchRequest:fetch error:nil];
+        for (Movie *movie in result)
+        {
+            [self.context deleteObject:movie];
+        }
+        __block NSError *error=nil;
+        for (int i=0;i<dataArray.count; i++) {
+            NSManagedObject *newMovie=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.context];
+            [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"title"] forKey:@"title"];
+            [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"poster_path"] forKey:@"posterPath"];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.context save:&error];
+        });
+    });
+}
+
+
 - (void)configureCell:(MovieTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    Car *car = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.myTitleLabel.text = car.mark;
-    cell.mySubtitleLabel.text = car.model;
+    Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.title.text = movie.title;
     
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:car.logoImage]];
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:movie.posterPath]];
         UIImage* image = [[UIImage alloc] initWithData:imageData];
         
         if (image) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                cell.myImageView.image=image;
+                cell.posterImage.image=image;
             });
         }
     });
@@ -108,7 +138,7 @@
     [fetchRequest setEntity:entity];
     
     NSSortDescriptor *sort = [[NSSortDescriptor alloc]
-                              initWithKey:@"name" ascending:NO];
+                              initWithKey:@"" ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
     
     [fetchRequest setFetchBatchSize:10];
@@ -145,7 +175,7 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            //[self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:

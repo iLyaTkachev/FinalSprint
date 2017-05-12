@@ -22,7 +22,7 @@
 @dynamic backdropPath;
 @dynamic popularity;
 @dynamic voteCount;
-@dynamic vote_average;
+@dynamic voteAverage;
 @dynamic actors;
 
 @end

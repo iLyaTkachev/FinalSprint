@@ -13,7 +13,7 @@
         <attribute name="posterPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="releaseDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="vote_average" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="voteAverage" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="voteCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="actors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Actor" syncable="YES"/>
     </entity>
