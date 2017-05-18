@@ -10,4 +10,6 @@
 
 @interface URLConnection : NSObject
 
+- (void)downloadData:(NSURL *)url myBlock:(void(^)(NSData *,NSError *))myBlock;
+
 @end

@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AppDelegate.h"
 
 @interface Provider : NSObject
+@property (nonatomic, strong) NSManagedObjectContext *context;
 
+-(id)initWithContext:(NSManagedObjectContext *)context;
+-(void)getObjectsFromURL:(NSString *)urlAdress;
 @end

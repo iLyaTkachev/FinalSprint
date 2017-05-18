@@ -17,13 +17,15 @@
 		09265B021EBC4D2E00AC31CD /* film.png in Resources */ = {isa = PBXBuildFile; fileRef = 09265B011EBC4D2E00AC31CD /* film.png */; };
 		09265B041EBC4D8D00AC31CD /* monitor.png in Resources */ = {isa = PBXBuildFile; fileRef = 09265B031EBC4D8D00AC31CD /* monitor.png */; };
 		094B11CD1EC4C99D00B2E0EC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 094B11CC1EC4C99D00B2E0EC /* Constants.m */; };
-		094B11D31EC4D0A900B2E0EC /* HTTPCommunication.m in Sources */ = {isa = PBXBuildFile; fileRef = 094B11D21EC4D0A900B2E0EC /* HTTPCommunication.m */; };
 		094B11DA1EC5C9A400B2E0EC /* MovieTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 094B11D91EC5C9A400B2E0EC /* MovieTableViewCell.m */; };
 		094B11F21EC5D48300B2E0EC /* Actor+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 094B11ED1EC5D48300B2E0EC /* Actor+CoreDataClass.m */; };
 		094B11F31EC5D48300B2E0EC /* Actor+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 094B11EF1EC5D48300B2E0EC /* Actor+CoreDataProperties.m */; };
 		094B11FA1EC5F02500B2E0EC /* Movie+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 094B11F71EC5F02500B2E0EC /* Movie+CoreDataClass.m */; };
 		094B11FB1EC5F02500B2E0EC /* Movie+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 094B11F91EC5F02500B2E0EC /* Movie+CoreDataProperties.m */; };
 		09603EFC1EC25A2400A02FB3 /* MovieViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09603EFB1EC25A2400A02FB3 /* MovieViewController.m */; };
+		0966F7611EC9FF5E00DC248F /* FRController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0966F7601EC9FF5E00DC248F /* FRController.m */; };
+		0966F7641ECA3DA500DC248F /* URLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0966F7631ECA3DA500DC248F /* URLConnection.m */; };
+		0966F7681ECA3DFD00DC248F /* Provider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0966F7671ECA3DFD00DC248F /* Provider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,8 +44,6 @@
 		09265B031EBC4D8D00AC31CD /* monitor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monitor.png; sourceTree = "<group>"; };
 		094B11CB1EC4C99D00B2E0EC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		094B11CC1EC4C99D00B2E0EC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
-		094B11D11EC4D0A900B2E0EC /* HTTPCommunication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPCommunication.h; sourceTree = "<group>"; };
-		094B11D21EC4D0A900B2E0EC /* HTTPCommunication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPCommunication.m; sourceTree = "<group>"; };
 		094B11D81EC5C9A400B2E0EC /* MovieTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieTableViewCell.h; sourceTree = "<group>"; };
 		094B11D91EC5C9A400B2E0EC /* MovieTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieTableViewCell.m; sourceTree = "<group>"; };
 		094B11EC1EC5D48300B2E0EC /* Actor+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Actor+CoreDataClass.h"; sourceTree = "<group>"; };
@@ -56,6 +56,12 @@
 		094B11F91EC5F02500B2E0EC /* Movie+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Movie+CoreDataProperties.m"; sourceTree = "<group>"; };
 		09603EFA1EC25A2400A02FB3 /* MovieViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieViewController.h; sourceTree = "<group>"; };
 		09603EFB1EC25A2400A02FB3 /* MovieViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieViewController.m; sourceTree = "<group>"; };
+		0966F75F1EC9FF5E00DC248F /* FRController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRController.h; sourceTree = "<group>"; };
+		0966F7601EC9FF5E00DC248F /* FRController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRController.m; sourceTree = "<group>"; };
+		0966F7621ECA3DA500DC248F /* URLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLConnection.h; sourceTree = "<group>"; };
+		0966F7631ECA3DA500DC248F /* URLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLConnection.m; sourceTree = "<group>"; };
+		0966F7661ECA3DFD00DC248F /* Provider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Provider.h; sourceTree = "<group>"; };
+		0966F7671ECA3DFD00DC248F /* Provider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Provider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +78,6 @@
 		09265AD31EBB21EA00AC31CD = {
 			isa = PBXGroup;
 			children = (
-				094B11E11EC5D3AC00B2E0EC /* Model */,
 				09265ADE1EBB21EA00AC31CD /* FinalSprint */,
 				09265ADD1EBB21EA00AC31CD /* Products */,
 			);
@@ -89,6 +94,8 @@
 		09265ADE1EBB21EA00AC31CD /* FinalSprint */ = {
 			isa = PBXGroup;
 			children = (
+				0966F7651ECA3DDA00DC248F /* Provider */,
+				094B11E11EC5D3AC00B2E0EC /* Model */,
 				094B11D01EC4D08D00B2E0EC /* Network */,
 				09603EFD1EC25A3100A02FB3 /* View Controllers */,
 				09265AE21EBB21EA00AC31CD /* AppDelegate.h */,
@@ -120,8 +127,8 @@
 		094B11D01EC4D08D00B2E0EC /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				094B11D11EC4D0A900B2E0EC /* HTTPCommunication.h */,
-				094B11D21EC4D0A900B2E0EC /* HTTPCommunication.m */,
+				0966F7621ECA3DA500DC248F /* URLConnection.h */,
+				0966F7631ECA3DA500DC248F /* URLConnection.m */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -139,6 +146,7 @@
 				094B11EF1EC5D48300B2E0EC /* Actor+CoreDataProperties.m */,
 			);
 			name = Model;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		09603EFD1EC25A3100A02FB3 /* View Controllers */ = {
@@ -148,8 +156,19 @@
 				09603EFB1EC25A2400A02FB3 /* MovieViewController.m */,
 				094B11D81EC5C9A400B2E0EC /* MovieTableViewCell.h */,
 				094B11D91EC5C9A400B2E0EC /* MovieTableViewCell.m */,
+				0966F75F1EC9FF5E00DC248F /* FRController.h */,
+				0966F7601EC9FF5E00DC248F /* FRController.m */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		0966F7651ECA3DDA00DC248F /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				0966F7661ECA3DFD00DC248F /* Provider.h */,
+				0966F7671ECA3DFD00DC248F /* Provider.m */,
+			);
+			name = Provider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,13 +247,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				094B11FB1EC5F02500B2E0EC /* Movie+CoreDataProperties.m in Sources */,
+				0966F7611EC9FF5E00DC248F /* FRController.m in Sources */,
 				094B11CD1EC4C99D00B2E0EC /* Constants.m in Sources */,
+				0966F7681ECA3DFD00DC248F /* Provider.m in Sources */,
 				094B11F21EC5D48300B2E0EC /* Actor+CoreDataClass.m in Sources */,
 				094B11DA1EC5C9A400B2E0EC /* MovieTableViewCell.m in Sources */,
 				094B11FA1EC5F02500B2E0EC /* Movie+CoreDataClass.m in Sources */,
 				09265AE41EBB21EA00AC31CD /* AppDelegate.m in Sources */,
 				094B11F31EC5D48300B2E0EC /* Actor+CoreDataProperties.m in Sources */,
-				094B11D31EC4D0A900B2E0EC /* HTTPCommunication.m in Sources */,
+				0966F7641ECA3DA500DC248F /* URLConnection.m in Sources */,
 				09265AE11EBB21EA00AC31CD /* main.m in Sources */,
 				09603EFC1EC25A2400A02FB3 /* MovieViewController.m in Sources */,
 			);

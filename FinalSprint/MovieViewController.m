@@ -10,6 +10,7 @@
 #import "MovieTableViewCell.h"
 #import "AppDelegate.h"
 #import "HTTPCommunication.h"
+#import "Provider.h"
 #import "Movie+CoreDataClass.h"
 #import "Constants.h"
 
@@ -20,7 +21,9 @@
 
 @implementation MovieViewController
 
+Provider *provider;
 NSArray *dataArray;
+int count;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,7 +31,11 @@ NSArray *dataArray;
     dataArray = [[NSArray alloc]init];
     AppDelegate* delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     self.context = delegate.managedObjectContext;
-    [self retrieveInfo];
+    provider=[[Provider alloc]initWithContext:delegate.managedObjectContext];
+    //NSString *url=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=%d";
+    //[provider getObjectsFromURL:url];
+    //[self retrieveInfo];
+    count=1;
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
@@ -37,6 +44,13 @@ NSArray *dataArray;
     }
     
    
+}
+- (IBAction)update:(id)sender {
+    NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
+    NSString *url=[NSString stringWithFormat: @"%@%d", url1, count];
+    [provider getObjectsFromURL:url];
+    count++;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,6 +62,7 @@ NSArray *dataArray;
 {
     MovieTableViewCell *cell = (MovieTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"MovieCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
+        NSLog(@"message from cellForRowAtIndexPath %@",indexPath);
     return cell;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -137,8 +152,7 @@ NSArray *dataArray;
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Movie" inManagedObjectContext:self.context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"popularity" ascending:NO];
@@ -147,9 +161,7 @@ NSArray *dataArray;
     [fetchRequest setFetchBatchSize:20];
     
     NSFetchedResultsController *theFetchedResultsController =
-    [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                        managedObjectContext:self.context sectionNameKeyPath:nil
-                                                   cacheName:@"Root"];
+    [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.context sectionNameKeyPath:nil cacheName:@"Root"];
     self.fetchedResultsController = theFetchedResultsController;
     self.fetchedResultsController.delegate = self;
     
@@ -179,13 +191,13 @@ NSArray *dataArray;
             
         case NSFetchedResultsChangeUpdate:
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            NSLog(@"message from fetchResultChangeUpdate %@",indexPath);
             break;
             
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray
-                                               arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }
@@ -201,6 +213,9 @@ NSArray *dataArray;
             
         case NSFetchedResultsChangeDelete:
             [self.myTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case NSFetchedResultsChangeMove:
+        case NSFetchedResultsChangeUpdate:
             break;
     }
 }
