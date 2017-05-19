@@ -15,5 +15,6 @@
 -(id)initWithContext:(NSManagedObjectContext *)context;
 -(void)getObjectsFromURL:(NSString *)urlAdress withBlock: (void(^)()) block;
 -(void)downloadNewMoviesFromPage:(int)pageCount withDeleting:(bool)mode withBlock: (void(^)()) block;
+-(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *)) block;
 
 @end

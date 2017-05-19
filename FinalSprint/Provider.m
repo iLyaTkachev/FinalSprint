@@ -102,4 +102,30 @@
     }
 }
 
+-(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *)) block
+{
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
+    {
+        NSURL *urlObj = [NSURL URLWithString:url];
+        URLConnection *con=[[URLConnection alloc]init];
+        [con downloadData:urlObj myBlock:^(NSData *data,NSError *error)
+         {
+             if (error.description==NULL)
+             {
+                 UIImage* image = [[UIImage alloc] initWithData:data];
+                 if (image)
+                 {
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         block(image);
+                     });
+                 }
+             }
+             else
+             {
+                 NSLog(@"Image download error: %@",error.description);
+             }
+         }];
+    });
+}
+
 @end

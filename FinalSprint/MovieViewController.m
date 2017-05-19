@@ -110,64 +110,15 @@ int cellsCount;
     return cellsCount;
 }
 
-- (void)retrieveInfo
-{
-    /*HTTPCommunication *http = [[HTTPCommunication alloc] init];
-    
-    NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=1"];
-    
-    [http retrieveURL:url myBlock:^(NSArray *array)
-     {
-         dataArray=[array valueForKey:@"results"];
-         [self addMovies];
-         //NSLog(@"%@",[[[array valueForKey:@"results"]objectAtIndex:0]valueForKey:@"title"]);
-     }];*/
-    
-}
--(void) addMovies
-{
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
-        NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-        [fetch setEntity:entity];
-        NSArray * result = [self.context executeFetchRequest:fetch error:nil];
-        for (Movie *movie in result)
-        {
-            [self.context deleteObject:movie];
-        }
-        __block NSError *error=nil;
-        for (int i=0;i<dataArray.count; i++) {
-            NSManagedObject *newMovie=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.context];
-            [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"title"] forKey:@"title"];
-            [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"poster_path"] forKey:@"posterPath"];
-            [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"popularity"] forKey:@"popularity"];
-            [newMovie setValue:[[dataArray objectAtIndex:i] objectForKey:@"vote_average"] forKey:@"voteAverage"];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.context save:&error];
-        });
-    });
-}
-
-
 - (void)configureCell:(MovieTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.title.text = movie.title;
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
-    
-    /*dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        
-        NSString *path=[NSString stringWithFormat: @"%@%@", imagesDB, movie.posterPath];
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
-        UIImage* image = [[UIImage alloc] initWithData:imageData];
-        
-        if (image) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                cell.posterImage.image=image;
-            });
-        }
-    });*/
-    
+    NSString *path=[NSString stringWithFormat: @"%@%@", movieCellImagesDB, movie.posterPath];
+    [provider downloadImageWithUrl:path withBlock:^(UIImage *img)
+    {
+        cell.posterImage.image=img;
+    }];
 }
 
 
