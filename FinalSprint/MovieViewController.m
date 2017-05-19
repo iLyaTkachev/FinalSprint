@@ -70,7 +70,14 @@ int cellsCount;
     if(self.myTableView.contentOffset.y<0)
     {
         NSLog(@"updating");
-        [self.activityIndicator stopAnimating];
+        [self.activityIndicator startAnimating];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            [provider downloadNewMoviesFromPage:count withDeleting:true withBlock:^(void)
+             {
+                 [self.activityIndicator stopAnimating];
+                 count=1;
+             }];
+        });
     }
 
     
@@ -80,23 +87,16 @@ int cellsCount;
 
 -(void)scrollViewDidEndDecelerating:(UIView *)scrollView
 {
-    /*if ()
-    {
-        
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
-            NSString *url=[NSString stringWithFormat: @"%@%d", url1, count];
-            [provider getObjectsFromURL:url];
-            count++;});
-    }*/
-    if(self.myTableView.contentOffset.y >= (self.myTableView.contentSize.height - self.myTableView.frame.size.height*2))
+    [self.activityIndicator startAnimating];
+    if(self.myTableView.contentOffset.y >= (self.myTableView.contentSize.height - self.myTableView.frame.size.height*2) && self.myTableView.contentSize.height>0)
     {
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            [self.activityIndicator startAnimating];
-            NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
-            NSString *url=[NSString stringWithFormat: @"%@%d", url1, count];
-            [provider getObjectsFromURL:url];
-            count++;});
+            [provider downloadNewMoviesFromPage:count withDeleting:false withBlock:^(void)
+             {
+                 [self.activityIndicator stopAnimating];
+                 count++;
+             }];
+            });
         
         NSLog(@"downloading");
     }

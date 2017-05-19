@@ -35,7 +35,7 @@
              [self serializeObjectsFromData:data myBlock:^(NSArray *array)
               {
                   objArray=[array valueForKey:@"results"];
-                  [self updateContextWithObjects:objArray];
+                  [self updateContextWithObjects:objArray withBlock:block ];
               }];
          }
          else {NSLog(@"urlConnection error %@",error.description);}
@@ -59,17 +59,10 @@
         }
             });
 }
--(void)updateContextWithObjects:(NSArray *)array
+-(void)updateContextWithObjects:(NSArray *)array withBlock: (void(^)()) block
 {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
-        NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-        [fetch setEntity:entity];
-        NSArray * result = [self.context executeFetchRequest:fetch error:nil];
-        for (Movie *movie in result)
-        {
-            [self.context deleteObject:movie];
-        }
         __block NSError *error=nil;
         for (int i=0;i<array.count; i++) {
             NSManagedObject *newMovie=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.context];
@@ -80,21 +73,33 @@
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.context save:&error];
+            block();
         });
     });
 
 }
--(void)downloadNewMoviesFromPage:(int)page withBlock: (void(^)()) block
-{    
-
+-(void)downloadNewMoviesFromPage:(int)pageCount withDeleting:(bool)mode withBlock: (void(^)()) block 
+{
+    if (mode) {
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
+        [self deleteObjectsWithEntity:entity withContext:self.context];
+        pageCount=1;
+    }
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
-        NSString *url=[NSString stringWithFormat: @"%@%d"];
-        
-        //[provider getObjectsFromURL:url];
+        NSString *url=[NSString stringWithFormat: @"%@%@&%@&%@=%d",moviesPopular,apiV3Key,lang,page,pageCount];
+        [self getObjectsFromURL:url withBlock:block];
     });
-
     
+}
+-(void)deleteObjectsWithEntity:(NSEntityDescription *) entity withContext:(NSManagedObjectContext *)moc
+{
+    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
+    [fetch setEntity:entity];
+    NSArray * result = [self.context executeFetchRequest:fetch error:nil];
+    for (NSManagedObject *movie in result)
+    {
+        [self.context deleteObject:movie];
+    }
 }
 
 @end
