@@ -150,10 +150,15 @@
                                     <outlet property="delegate" destination="5Ms-A8-Ogn" id="NMP-PT-5Cp"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="bSa-4c-czf">
+                                <rect key="frame" x="177" y="32" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="bSa-4c-czf" firstAttribute="centerX" secondItem="dM6-Gc-QuU" secondAttribute="centerX" id="3Gq-4m-cJj"/>
                             <constraint firstAttribute="trailing" secondItem="GL2-08-Lj4" secondAttribute="trailing" id="6Qo-Wp-CKb"/>
+                            <constraint firstItem="bSa-4c-czf" firstAttribute="top" secondItem="nHJ-9K-nax" secondAttribute="bottom" constant="12" id="I8f-M1-DdK"/>
                             <constraint firstItem="wAD-vo-d7w" firstAttribute="top" secondItem="QBc-5l-hSW" secondAttribute="bottom" id="VOM-jb-oQR"/>
                             <constraint firstAttribute="trailing" secondItem="QBc-5l-hSW" secondAttribute="trailing" id="buM-Tb-PGg"/>
                             <constraint firstItem="GL2-08-Lj4" firstAttribute="leading" secondItem="dM6-Gc-QuU" secondAttribute="leading" id="d79-iA-lWH"/>
@@ -164,6 +169,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Movie" image="film.png" id="DCv-BK-ZQc"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="bSa-4c-czf" id="DSx-Vq-82J"/>
                         <outlet property="myTableView" destination="QBc-5l-hSW" id="Hlj-zv-Rxt"/>
                     </connections>
                 </viewController>

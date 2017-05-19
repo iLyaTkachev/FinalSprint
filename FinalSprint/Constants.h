@@ -15,5 +15,6 @@ extern NSString * const apiV4Key;
 extern NSString * const dataBaseURL;
 extern NSString * const dataBaseURLSSL;
 extern NSString * const imagesDB;
+extern NSString * const moviesPopular;
 
 @end

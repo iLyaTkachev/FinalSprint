@@ -14,4 +14,6 @@
 
 -(id)initWithContext:(NSManagedObjectContext *)context;
 -(void)getObjectsFromURL:(NSString *)urlAdress;
+-(void)downloadNewMoviesFromPage:(int)page;
+
 @end

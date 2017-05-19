@@ -9,12 +9,12 @@
 #import "MovieViewController.h"
 #import "MovieTableViewCell.h"
 #import "AppDelegate.h"
-#import "HTTPCommunication.h"
 #import "Provider.h"
 #import "Movie+CoreDataClass.h"
 #import "Constants.h"
 
 @interface MovieViewController ()
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @end
@@ -24,6 +24,7 @@
 Provider *provider;
 NSArray *dataArray;
 int count;
+int cellsCount;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,10 +47,12 @@ int count;
    
 }
 - (IBAction)update:(id)sender {
-    NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
-    NSString *url=[NSString stringWithFormat: @"%@%d", url1, count];
-    [provider getObjectsFromURL:url];
-    count++;
+    //NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
+    //NSString *url=[NSString stringWithFormat: @"%@%d", url1, count];
+    //[provider getObjectsFromURL:url];
+    //count++;
+    [provider downloadNewMoviesFromPage:count];
+    NSLog(@"%d",count);
 
 }
 
@@ -62,19 +65,54 @@ int count;
 {
     MovieTableViewCell *cell = (MovieTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"MovieCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
-        NSLog(@"message from cellForRowAtIndexPath %@",indexPath);
+    NSLog(@"message from cellForRowAtIndexPath %d",indexPath.row);
+    NSLog(@"offset === %f === %f",self.myTableView.contentOffset.y,(self.myTableView.contentSize.height - self.myTableView.frame.size.height*2));
+    if(self.myTableView.contentOffset.y<0)
+    {
+        NSLog(@"updating");
+        [self.activityIndicator stopAnimating];
+    }
+
+    
+                                                                                         
     return cell;
 }
+
+-(void)scrollViewDidEndDecelerating:(UIView *)scrollView
+{
+    /*if ()
+    {
+        
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
+            NSString *url=[NSString stringWithFormat: @"%@%d", url1, count];
+            [provider getObjectsFromURL:url];
+            count++;});
+    }*/
+    if(self.myTableView.contentOffset.y >= (self.myTableView.contentSize.height - self.myTableView.frame.size.height*2))
+    {
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            [self.activityIndicator startAnimating];
+            NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
+            NSString *url=[NSString stringWithFormat: @"%@%d", url1, count];
+            [provider getObjectsFromURL:url];
+            count++;});
+        
+        NSLog(@"downloading");
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id  sectionInfo =
-    [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    id  sectionInfo =[[self.fetchedResultsController sections] objectAtIndex:section];
+    NSLog(@"================ %d",[sectionInfo numberOfObjects]);
+    cellsCount=[sectionInfo numberOfObjects];
+    return cellsCount;
 }
 
 - (void)retrieveInfo
 {
-    HTTPCommunication *http = [[HTTPCommunication alloc] init];
+    /*HTTPCommunication *http = [[HTTPCommunication alloc] init];
     
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=1"];
     
@@ -83,7 +121,7 @@ int count;
          dataArray=[array valueForKey:@"results"];
          [self addMovies];
          //NSLog(@"%@",[[[array valueForKey:@"results"]objectAtIndex:0]valueForKey:@"title"]);
-     }];
+     }];*/
     
 }
 -(void) addMovies
@@ -117,7 +155,7 @@ int count;
     cell.title.text = movie.title;
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
     
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    /*dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         
         NSString *path=[NSString stringWithFormat: @"%@%@", imagesDB, movie.posterPath];
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
@@ -128,7 +166,7 @@ int count;
                 cell.posterImage.image=image;
             });
         }
-    });
+    });*/
     
 }
 

@@ -9,6 +9,7 @@
 #import "Provider.h"
 #import "URLConnection.h"
 #import "Movie+CoreDataClass.h"
+#import "Constants.h"
 
 @implementation Provider
 
@@ -82,6 +83,10 @@
         });
     });
 
+}
+-(void)downloadNewMoviesFromPage:(int)page //withBlock: (void(^)()) block
+{
+    page++;
 }
 
 @end

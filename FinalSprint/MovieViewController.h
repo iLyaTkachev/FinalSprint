@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MovieViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface MovieViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @end
