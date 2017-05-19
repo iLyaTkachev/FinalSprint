@@ -107,8 +107,6 @@ NSMutableDictionary *imgDict;
 
 -(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *)) block
 {
-    //if ([imgDict objectForKey:url]==NULL)
-    //{
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
     {
         if ([imgDict objectForKey:url]==NULL)
@@ -133,7 +131,6 @@ NSMutableDictionary *imgDict;
                  NSLog(@"Image download error: %@",error.description);
              }
          }];
-    //});
     }
     else
     {
@@ -141,8 +138,6 @@ NSMutableDictionary *imgDict;
         dispatch_async(dispatch_get_main_queue(), ^{
             block(existingImg);
         });
-
-        //block([imgDict objectForKey:url]);
     }
     });
 }

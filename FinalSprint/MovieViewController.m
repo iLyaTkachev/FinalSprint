@@ -23,7 +23,7 @@
 
 Provider *provider;
 NSArray *dataArray;
-int count;
+int pageCount;
 int cellsCount;
 
 - (void)viewDidLoad {
@@ -33,10 +33,7 @@ int cellsCount;
     AppDelegate* delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     self.context = delegate.managedObjectContext;
     provider=[[Provider alloc]initWithContext:delegate.managedObjectContext];
-    //NSString *url=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=%d";
-    //[provider getObjectsFromURL:url];
-    //[self retrieveInfo];
-    count=1;
+    pageCount=1;
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
@@ -47,12 +44,7 @@ int cellsCount;
    
 }
 - (IBAction)update:(id)sender {
-    //NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
-    //NSString *url=[NSString stringWithFormat: @"%@%d", url1, count];
-    //[provider getObjectsFromURL:url];
-    //count++;
-    //[provider downloadNewMoviesFromPage:&count];
-    NSLog(@"%d",count);
+    NSLog(@"%d",pageCount);
 
 }
 
@@ -72,10 +64,10 @@ int cellsCount;
         NSLog(@"updating");
         [self.activityIndicator startAnimating];
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            [provider downloadNewMoviesFromPage:count withDeleting:true withBlock:^(void)
+            [provider downloadNewMoviesFromPage:pageCount withDeleting:true withBlock:^(void)
              {
                  [self.activityIndicator stopAnimating];
-                 count=1;
+                 pageCount=2;
              }];
         });
     }
@@ -91,10 +83,10 @@ int cellsCount;
     if(self.myTableView.contentOffset.y >= (self.myTableView.contentSize.height - self.myTableView.frame.size.height*2) && self.myTableView.contentSize.height>0)
     {
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            [provider downloadNewMoviesFromPage:count withDeleting:false withBlock:^(void)
+            [provider downloadNewMoviesFromPage:pageCount withDeleting:false withBlock:^(void)
              {
                  [self.activityIndicator stopAnimating];
-                 count++;
+                 pageCount++;
              }];
             });
         
@@ -111,6 +103,7 @@ int cellsCount;
 }
 
 - (void)configureCell:(MovieTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    cell.posterImage.image=NULL;
     Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.title.text = movie.title;
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
