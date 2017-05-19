@@ -16,5 +16,7 @@ extern NSString * const dataBaseURL;
 extern NSString * const dataBaseURLSSL;
 extern NSString * const imagesDB;
 extern NSString * const moviesPopular;
+extern NSString * const lang;
+extern NSString * const page;
 
 @end

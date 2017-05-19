@@ -51,7 +51,7 @@ int cellsCount;
     //NSString *url=[NSString stringWithFormat: @"%@%d", url1, count];
     //[provider getObjectsFromURL:url];
     //count++;
-    [provider downloadNewMoviesFromPage:count];
+    //[provider downloadNewMoviesFromPage:&count];
     NSLog(@"%d",count);
 
 }

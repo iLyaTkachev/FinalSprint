@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NSManagedObjectContext *context;
 
 -(id)initWithContext:(NSManagedObjectContext *)context;
--(void)getObjectsFromURL:(NSString *)urlAdress;
--(void)downloadNewMoviesFromPage:(int)page;
+-(void)getObjectsFromURL:(NSString *)urlAdress withBlock: (void(^)()) block;
+-(void)downloadNewMoviesFromPage:(int)page withBlock: (void(^)()) block;
 
 @end

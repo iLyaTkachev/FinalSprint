@@ -23,7 +23,7 @@
     return self;
 }
 
--(void)getObjectsFromURL:(NSString *)urlAdress
+-(void)getObjectsFromURL:(NSString *)urlAdress withBlock: (void(^)()) block
 {
     NSURL *url = [NSURL URLWithString:urlAdress];
     URLConnection *con=[[URLConnection alloc]init];
@@ -84,9 +84,17 @@
     });
 
 }
--(void)downloadNewMoviesFromPage:(int)page //withBlock: (void(^)()) block
-{
-    page++;
+-(void)downloadNewMoviesFromPage:(int)page withBlock: (void(^)()) block
+{    
+
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        NSString *url1=@"https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=";
+        NSString *url=[NSString stringWithFormat: @"%@%d"];
+        
+        //[provider getObjectsFromURL:url];
+    });
+
+    
 }
 
 @end
