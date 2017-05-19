@@ -13,12 +13,15 @@
 
 @implementation Provider
 
+NSMutableDictionary *imgDict;
+
 -(id)initWithContext:(NSManagedObjectContext *)context
 {
     self=[super init];
     if(self)
     {
         self.context=context;
+        imgDict = [[NSMutableDictionary alloc]init];
     }
     return self;
 }
@@ -104,8 +107,12 @@
 
 -(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *)) block
 {
+    //if ([imgDict objectForKey:url]==NULL)
+    //{
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
     {
+        if ([imgDict objectForKey:url]==NULL)
+        {
         NSURL *urlObj = [NSURL URLWithString:url];
         URLConnection *con=[[URLConnection alloc]init];
         [con downloadData:urlObj myBlock:^(NSData *data,NSError *error)
@@ -115,6 +122,7 @@
                  UIImage* image = [[UIImage alloc] initWithData:data];
                  if (image)
                  {
+                     [imgDict setObject:image forKey:url];
                      dispatch_async(dispatch_get_main_queue(), ^{
                          block(image);
                      });
@@ -125,6 +133,17 @@
                  NSLog(@"Image download error: %@",error.description);
              }
          }];
+    //});
+    }
+    else
+    {
+        UIImage *existingImg =[imgDict objectForKey:url];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(existingImg);
+        });
+
+        //block([imgDict objectForKey:url]);
+    }
     });
 }
 
