@@ -11,6 +11,7 @@
 
 @interface Provider : NSObject
 @property (nonatomic, strong) NSManagedObjectContext *context;
+@property (nonatomic, strong) NSManagedObjectContext *privateContext;
 
 -(id)initWithContext:(NSManagedObjectContext *)context;
 -(void)getObjectsFromURL:(NSString *)urlAdress withBlock: (void(^)()) block;

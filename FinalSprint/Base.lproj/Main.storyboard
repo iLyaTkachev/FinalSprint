@@ -177,10 +177,10 @@
             </objects>
             <point key="canvasLocation" x="480.80000000000001" y="-723.68815592203907"/>
         </scene>
-        <!--View Controller-->
+        <!--Details-->
         <scene sceneID="F2x-DE-sRE">
             <objects>
-                <viewController id="ZQw-Qx-UPR" sceneMemberID="viewController">
+                <viewController title="Details" id="ZQw-Qx-UPR" customClass="DetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3mf-Xo-0cn"/>
                         <viewControllerLayoutGuide type="bottom" id="Bdt-QK-uWv"/>
@@ -199,6 +199,9 @@
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <accessibility key="accessibilityConfiguration" identifier="Details">
+                            <bool key="isElement" value="NO"/>
+                        </accessibility>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sEW-tx-jOb" userLabel="First Responder" sceneMemberID="firstResponder"/>

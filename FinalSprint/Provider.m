@@ -21,7 +21,10 @@ NSMutableDictionary *imgDict;
     if(self)
     {
         self.context=context;
+        self.privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [self.privateContext setParentContext:self.context];
         imgDict = [[NSMutableDictionary alloc]init];
+        
     }
     return self;
 }
@@ -32,8 +35,8 @@ NSMutableDictionary *imgDict;
     URLConnection *con=[[URLConnection alloc]init];
     [con downloadData:url myBlock:^(NSData *data,NSError *error)
      {
-         if (error.description==NULL) {
-             //NSLog(@"no errors");
+         if (error==NULL) {
+             NSLog(@"no errors");
              __block NSArray *objArray=[[NSArray alloc]init];
              [self serializeObjectsFromData:data myBlock:^(NSArray *array)
               {
@@ -64,28 +67,36 @@ NSMutableDictionary *imgDict;
 }
 -(void)updateContextWithObjects:(NSArray *)array withBlock: (void(^)()) block
 {
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
-        __block NSError *error=nil;
-        for (int i=0;i<array.count; i++) {
-            NSManagedObject *newMovie=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.context];
-            [newMovie setValue:[[array objectAtIndex:i] objectForKey:@"title"] forKey:@"title"];
-            [newMovie setValue:[[array objectAtIndex:i] objectForKey:@"poster_path"] forKey:@"posterPath"];
-            [newMovie setValue:[[array objectAtIndex:i] objectForKey:@"popularity"] forKey:@"popularity"];
-            [newMovie setValue:[[array objectAtIndex:i] objectForKey:@"vote_average"] forKey:@"voteAverage"];
+    [self.privateContext performBlock:^{
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.privateContext];
+        for (NSDictionary *jsonObject in array) {
+            NSManagedObject *newMovie=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
+            [newMovie setValue:[jsonObject objectForKey:@"title"] forKey:@"title"];
+            [newMovie setValue:[jsonObject objectForKey:@"poster_path"] forKey:@"posterPath"];
+            [newMovie setValue:[jsonObject objectForKey:@"popularity"] forKey:@"popularity"];
+            [newMovie setValue:[jsonObject objectForKey:@"vote_average"] forKey:@"voteAverage"];
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.context save:&error];
-            block();
-        });
-    });
+        NSError *error = nil;
+        if (![self.privateContext save:&error]) {
+            NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+            abort();
+        }
+        [self.context performBlockAndWait:^{
+            NSError *error = nil;
+            if (![self.context save:&error]) {
+                NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+                abort();
+            }
+            else{block();}
+        }];
+    }];
 
 }
--(void)downloadNewMoviesFromPage:(int)pageCount withDeleting:(bool)mode withBlock: (void(^)()) block 
+-(void)downloadNewMoviesFromPage:(int)pageCount withDeleting:(bool)mode withBlock: (void(^)()) block
 {
     if (mode) {
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
-        [self deleteObjectsWithEntity:entity withContext:self.context];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.privateContext];
+        [self deleteObjectsWithEntity:entity withContext:self.privateContext];
         pageCount=1;
     }
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
@@ -96,13 +107,28 @@ NSMutableDictionary *imgDict;
 }
 -(void)deleteObjectsWithEntity:(NSEntityDescription *) entity withContext:(NSManagedObjectContext *)moc
 {
-    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-    [fetch setEntity:entity];
-    NSArray * result = [self.context executeFetchRequest:fetch error:nil];
-    for (NSManagedObject *movie in result)
-    {
-        [self.context deleteObject:movie];
-    }
+    [self.privateContext performBlock:^{
+        NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
+        [fetch setEntity:entity];
+        NSArray * result = [moc executeFetchRequest:fetch error:nil];
+        for (NSManagedObject *movie in result)
+        {
+            [moc deleteObject:movie];
+        }
+        NSError *error = nil;
+        if (![moc save:&error]) {
+            NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+            abort();
+        }
+        [self.context performBlockAndWait:^{
+            NSError *error = nil;
+            if (![self.context save:&error]) {
+                NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+                abort();
+            }
+        }];
+    }];
+
 }
 
 -(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *)) block
@@ -115,7 +141,7 @@ NSMutableDictionary *imgDict;
         URLConnection *con=[[URLConnection alloc]init];
         [con downloadData:urlObj myBlock:^(NSData *data,NSError *error)
          {
-             if (error.description==NULL)
+             if (error==NULL)
              {
                  UIImage* image = [[UIImage alloc] initWithData:data];
                  if (image)

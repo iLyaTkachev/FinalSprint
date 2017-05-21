@@ -26,6 +26,7 @@
 		0966F7611EC9FF5E00DC248F /* FRController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0966F7601EC9FF5E00DC248F /* FRController.m */; };
 		0966F7641ECA3DA500DC248F /* URLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0966F7631ECA3DA500DC248F /* URLConnection.m */; };
 		0966F7681ECA3DFD00DC248F /* Provider.m in Sources */ = {isa = PBXBuildFile; fileRef = 0966F7671ECA3DFD00DC248F /* Provider.m */; };
+		098524B81ED24F0A00B15D92 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 098524B71ED24F0A00B15D92 /* DetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,8 @@
 		0966F7631ECA3DA500DC248F /* URLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLConnection.m; sourceTree = "<group>"; };
 		0966F7661ECA3DFD00DC248F /* Provider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Provider.h; sourceTree = "<group>"; };
 		0966F7671ECA3DFD00DC248F /* Provider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Provider.m; sourceTree = "<group>"; };
+		098524B61ED24F0A00B15D92 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		098524B71ED24F0A00B15D92 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +161,8 @@
 				094B11D91EC5C9A400B2E0EC /* MovieTableViewCell.m */,
 				0966F75F1EC9FF5E00DC248F /* FRController.h */,
 				0966F7601EC9FF5E00DC248F /* FRController.m */,
+				098524B61ED24F0A00B15D92 /* DetailViewController.h */,
+				098524B71ED24F0A00B15D92 /* DetailViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 				094B11FA1EC5F02500B2E0EC /* Movie+CoreDataClass.m in Sources */,
 				09265AE41EBB21EA00AC31CD /* AppDelegate.m in Sources */,
 				094B11F31EC5D48300B2E0EC /* Actor+CoreDataProperties.m in Sources */,
+				098524B81ED24F0A00B15D92 /* DetailViewController.m in Sources */,
 				0966F7641ECA3DA500DC248F /* URLConnection.m in Sources */,
 				09265AE11EBB21EA00AC31CD /* main.m in Sources */,
 				09603EFC1EC25A2400A02FB3 /* MovieViewController.m in Sources */,

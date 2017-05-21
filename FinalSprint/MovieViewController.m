@@ -12,6 +12,7 @@
 #import "Provider.h"
 #import "Movie+CoreDataClass.h"
 #import "Constants.h"
+#import "DetailViewController.h"
 
 @interface MovieViewController ()
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -44,7 +45,10 @@ int cellsCount;
    
 }
 - (IBAction)update:(id)sender {
-    NSLog(@"%d",pageCount);
+    
+    DetailViewController *details=[[DetailViewController alloc]init];
+    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:self];
+    [navigationController1 pushViewController:details animated:YES];
 
 }
 
@@ -57,9 +61,19 @@ int cellsCount;
 {
     MovieTableViewCell *cell = (MovieTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"MovieCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
-    NSLog(@"message from cellForRowAtIndexPath %d",indexPath.row);
-    NSLog(@"offset === %f === %f",self.myTableView.contentOffset.y,(self.myTableView.contentSize.height - self.myTableView.frame.size.height*2));
-    if(self.myTableView.contentOffset.y<0)
+    //NSLog(@"message from cellForRowAtIndexPath %d",indexPath.row);
+    //NSLog(@"offset === %f === %f",self.myTableView.contentOffset.y,(self.myTableView.contentSize.height - self.myTableView.frame.size.height*2));
+    
+    
+                                                                                         
+    return cell;
+}
+
+-(void)scrollViewDidEndDecelerating:(UIView *)scrollView
+{
+    NSLog(@"scrollviewdidenddecelrating");
+    
+    if(self.myTableView.contentOffset.y<30)
     {
         NSLog(@"updating");
         [self.activityIndicator startAnimating];
@@ -72,32 +86,27 @@ int cellsCount;
         });
     }
 
-    
-                                                                                         
-    return cell;
 }
 
--(void)scrollViewDidEndDecelerating:(UIView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.activityIndicator startAnimating];
     if(self.myTableView.contentOffset.y >= (self.myTableView.contentSize.height - self.myTableView.frame.size.height*2) && self.myTableView.contentSize.height>0)
     {
+        NSLog(@"downloading");
+        [self.activityIndicator startAnimating];
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             [provider downloadNewMoviesFromPage:pageCount withDeleting:false withBlock:^(void)
              {
                  [self.activityIndicator stopAnimating];
                  pageCount++;
              }];
-            });
-        
-        NSLog(@"downloading");
+        });
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id  sectionInfo =[[self.fetchedResultsController sections] objectAtIndex:section];
-    NSLog(@"================ %d",[sectionInfo numberOfObjects]);
     cellsCount=[sectionInfo numberOfObjects];
     return cellsCount;
 }
