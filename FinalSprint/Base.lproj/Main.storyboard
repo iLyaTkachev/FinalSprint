@@ -189,19 +189,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Xo-wt-R8C">
-                                <rect key="frame" x="28" y="70" width="318" height="212"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">This is detail view which shows when user tab current Movie or TV Show cell in table. It will contains info about Movie or TV Show(images, actors, rating ...) Here user can rate movie and add it to the some list.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6b-Vm-5Y6">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ceq-yT-OHC"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Details" id="QUO-Qg-zLg"/>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rYi-Cy-e2j">
+                                <rect key="frame" x="0.0" y="64" width="375" height="211"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="rYi-Cy-e2j" secondAttribute="height" multiplier="500:281" id="Zhg-Ds-eWw"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <accessibility key="accessibilityConfiguration" identifier="Details">
                             <bool key="isElement" value="NO"/>
                         </accessibility>
+                        <constraints>
+                            <constraint firstItem="rYi-Cy-e2j" firstAttribute="top" secondItem="Z6b-Vm-5Y6" secondAttribute="bottom" symbolic="YES" id="2m5-Ic-Jvw"/>
+                            <constraint firstItem="Z6b-Vm-5Y6" firstAttribute="leading" secondItem="a2a-v7-d2v" secondAttribute="leading" id="3Rn-6P-BAE"/>
+                            <constraint firstAttribute="trailing" secondItem="Z6b-Vm-5Y6" secondAttribute="trailing" id="Vxb-K2-Ub3"/>
+                            <constraint firstItem="rYi-Cy-e2j" firstAttribute="leading" secondItem="a2a-v7-d2v" secondAttribute="leading" id="Zfb-1G-zrV"/>
+                            <constraint firstAttribute="trailing" secondItem="rYi-Cy-e2j" secondAttribute="trailing" id="gWu-3z-Dep"/>
+                            <constraint firstItem="Z6b-Vm-5Y6" firstAttribute="top" secondItem="3mf-Xo-0cn" secondAttribute="bottom" id="hl1-hl-vDH"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sEW-tx-jOb" userLabel="First Responder" sceneMemberID="firstResponder"/>

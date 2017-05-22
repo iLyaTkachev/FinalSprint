@@ -12,10 +12,11 @@
 @interface Provider : NSObject
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSManagedObjectContext *privateContext;
+@property (nonatomic,strong) NSMutableDictionary *imageDict;
 
 -(id)initWithContext:(NSManagedObjectContext *)context;
--(void)getObjectsFromURL:(NSString *)urlAdress withBlock: (void(^)()) block;
--(void)downloadNewMoviesFromPage:(int)pageCount withDeleting:(bool)mode withBlock: (void(^)()) block;
+-(void)getObjectsFromURL:(NSString *)urlAdress withBlock: (void(^)(NSArray *, NSError *)) block;
+-(void)downloadNewMoviesFromPage:(int)pageCount withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block;
 -(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *)) block;
 
 @end

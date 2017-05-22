@@ -18,22 +18,24 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic,strong) Provider *provider;
+@property (nonatomic,strong) NSArray *dataArray;
 @end
+
 
 @implementation MovieViewController
 
-Provider *provider;
-NSArray *dataArray;
 int pageCount;
 int cellsCount;
+bool *downloadFlag;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    dataArray = [[NSArray alloc]init];
+    self.dataArray = [[NSArray alloc]init];
     AppDelegate* delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     self.context = delegate.managedObjectContext;
-    provider=[[Provider alloc]initWithContext:delegate.managedObjectContext];
+    self.provider=[[Provider alloc]initWithContext:delegate.managedObjectContext];
     pageCount=1;
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
@@ -46,9 +48,13 @@ int cellsCount;
 }
 - (IBAction)update:(id)sender {
     
-    DetailViewController *details=[[DetailViewController alloc]init];
-    UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:self];
-    [navigationController1 pushViewController:details animated:YES];
+    //DetailViewController *details=[[DetailViewController alloc]init];
+    //UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:self];
+    //[navigationController1 pushViewController:details animated:YES];
+    
+    DetailViewController *detailVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailVC"];
+    //inboxVC.soapiController = _soapiController;
+    [[self navigationController] pushViewController:detailVC animated:YES];
 
 }
 
@@ -69,25 +75,6 @@ int cellsCount;
     return cell;
 }
 
--(void)scrollViewDidEndDecelerating:(UIView *)scrollView
-{
-    NSLog(@"scrollviewdidenddecelrating");
-    
-    if(self.myTableView.contentOffset.y<30)
-    {
-        NSLog(@"updating");
-        [self.activityIndicator startAnimating];
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            [provider downloadNewMoviesFromPage:pageCount withDeleting:true withBlock:^(void)
-             {
-                 [self.activityIndicator stopAnimating];
-                 pageCount=2;
-             }];
-        });
-    }
-
-}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if(self.myTableView.contentOffset.y >= (self.myTableView.contentSize.height - self.myTableView.frame.size.height*2) && self.myTableView.contentSize.height>0)
@@ -95,13 +82,26 @@ int cellsCount;
         NSLog(@"downloading");
         [self.activityIndicator startAnimating];
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            [provider downloadNewMoviesFromPage:pageCount withDeleting:false withBlock:^(void)
+            [self.provider downloadNewMoviesFromPage:pageCount withDeleting:false withBlock:^(void)
              {
                  [self.activityIndicator stopAnimating];
                  pageCount++;
              }];
         });
     }
+    else if(self.myTableView.contentOffset.y<-120)
+    {
+        NSLog(@"updating");
+        [self.activityIndicator startAnimating];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            [self.provider downloadNewMoviesFromPage:pageCount withDeleting:true withBlock:^(void)
+             {
+                 [self.activityIndicator stopAnimating];
+                 pageCount=2;
+             }];
+        });
+    }
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -117,7 +117,7 @@ int cellsCount;
     cell.title.text = movie.title;
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
     NSString *path=[NSString stringWithFormat: @"%@%@", movieCellImagesDB, movie.posterPath];
-    [provider downloadImageWithUrl:path withBlock:^(UIImage *img)
+    [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img)
     {
         cell.posterImage.image=img;
     }];

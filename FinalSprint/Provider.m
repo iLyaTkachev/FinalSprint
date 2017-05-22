@@ -12,8 +12,7 @@
 #import "Constants.h"
 
 @implementation Provider
-
-NSMutableDictionary *imgDict;
+@synthesize imageDict=imgDict;
 
 -(id)initWithContext:(NSManagedObjectContext *)context
 {
@@ -29,13 +28,14 @@ NSMutableDictionary *imgDict;
     return self;
 }
 
--(void)getObjectsFromURL:(NSString *)urlAdress withBlock: (void(^)()) block
+-(void)getObjectsFromURL:(NSString *)urlAdress withBlock: (void(^)(NSArray *, NSError *)) block
 {
     NSURL *url = [NSURL URLWithString:urlAdress];
     URLConnection *con=[[URLConnection alloc]init];
     [con downloadData:url myBlock:^(NSData *data,NSError *error)
      {
-         if (error==NULL) {
+         if (error==NULL)
+         {
              NSLog(@"no errors");
              __block NSArray *objArray=[[NSArray alloc]init];
              [self serializeObjectsFromData:data myBlock:^(NSArray *array)
@@ -44,11 +44,15 @@ NSMutableDictionary *imgDict;
                   [self updateContextWithObjects:objArray withBlock:block ];
               }];
          }
-         else {NSLog(@"urlConnection error %@",error.description);}
+         else
+         {
+             NSLog(@"urlConnection error %@",error.description);
+             block(nil,error);
+         }
      }];
 }
 
--(void)serializeObjectsFromData:(NSData *)data myBlock:(void (^)(NSArray *))block
+-(void)serializeObjectsFromData:(NSData *)data myBlock:(void (^)(NSArray * ))block
 {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         NSError *error = nil;
@@ -92,7 +96,7 @@ NSMutableDictionary *imgDict;
     }];
 
 }
--(void)downloadNewMoviesFromPage:(int)pageCount withDeleting:(bool)mode withBlock: (void(^)()) block
+-(void)downloadNewMoviesFromPage:(int)pageCount withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block
 {
     if (mode) {
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.privateContext];
@@ -105,7 +109,12 @@ NSMutableDictionary *imgDict;
     });
     
 }
--(void)deleteObjectsWithEntity:(NSEntityDescription *) entity withContext:(NSManagedObjectContext *)moc
+-(void)updateTableWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withBlock: (void(^)(NSError *)) block
+{
+    
+}
+
+-(void)deleteObjectsWithEntity:(NSEntityDescription *) entity withContext:(NSManagedObjectContext *)moc withBlock: (void(^)(NSError *)) block
 {
     [self.privateContext performBlock:^{
         NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
@@ -118,12 +127,14 @@ NSMutableDictionary *imgDict;
         NSError *error = nil;
         if (![moc save:&error]) {
             NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+            block(error);
             abort();
         }
         [self.context performBlockAndWait:^{
             NSError *error = nil;
             if (![self.context save:&error]) {
                 NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+                block(error);
                 abort();
             }
         }];
