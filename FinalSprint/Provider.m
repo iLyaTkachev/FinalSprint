@@ -82,8 +82,12 @@
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.privateContext];
         for (NSDictionary *jsonObject in array) {
             NSManagedObject *newMovie=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
-            [newMovie setValue:[jsonObject objectForKey:@"title"] forKey:@"title"];
             [newMovie setValue:[jsonObject objectForKey:@"poster_path"] forKey:@"posterPath"];
+            [newMovie setValue:[jsonObject objectForKey:@"overview"] forKey:@"overview"];
+            [newMovie setValue:[jsonObject objectForKey:@"release_date"] forKey:@"releaseDate"];
+            //([newMovie setValue:[jsonObject objectForKey:@"genre_ids"]) forKey:@"releaseDate"];
+            
+            [newMovie setValue:[jsonObject objectForKey:@"title"] forKey:@"title"];
             [newMovie setValue:[jsonObject objectForKey:@"popularity"] forKey:@"popularity"];
             [newMovie setValue:[jsonObject objectForKey:@"vote_average"] forKey:@"voteAverage"];
         }

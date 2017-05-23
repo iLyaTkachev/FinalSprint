@@ -86,7 +86,7 @@ bool downloadingError;
 {
     MovieTableViewCell *cell = (MovieTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"MovieCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
-    //NSLog(@"message from cellForRowAtIndexPath %d",indexPath.row);
+    NSLog(@"message from cellForRowAtIndexPath %d",indexPath.row);
     //NSLog(@"offset === %f === %f",self.myTableView.contentOffset.y,(self.myTableView.contentSize.height - self.myTableView.frame.size.height*2));
     
     return cell;
@@ -150,13 +150,17 @@ bool downloadingError;
 
 - (void)configureCell:(MovieTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     cell.posterImage.image=NULL;
+    cell.tag = indexPath.row;
     Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.title.text = movie.title;
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
-    NSString *path=[NSString stringWithFormat: @"%@%@", movieCellImagesDB, movie.posterPath];
+    NSString *path=[NSString stringWithFormat: @"%@%@", moviePosterImagesDB, movie.posterPath];
     [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img)
     {
-        cell.posterImage.image=img;
+        if (cell.tag == indexPath.row) {
+            cell.posterImage.image = img;
+            [cell setNeedsLayout];
+        }
     }];
 }
 
