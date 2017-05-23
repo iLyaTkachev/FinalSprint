@@ -36,12 +36,19 @@
      {
          if (error==NULL)
          {
-             NSLog(@"no errors");
              __block NSArray *objArray=[[NSArray alloc]init];
-             [self serializeObjectsFromData:data myBlock:^(NSArray *array)
+             [self serializeObjectsFromData:data myBlock:^(NSArray *array,NSError *serializeError)
               {
-                  objArray=[array valueForKey:@"results"];
-                  [self updateContextWithObjects:objArray withBlock:block ];
+                  if (serializeError==nil) {
+                      objArray=[array valueForKey:@"results"];
+                      block(objArray,nil);
+                  }
+                  //[self updateContextWithObjects:objArray withBlock:block ];
+                  else
+                  {
+                      NSLog(@"Serialization error %@",error.description);
+                      block(nil,serializeError);
+                  }
               }];
          }
          else
@@ -52,7 +59,7 @@
      }];
 }
 
--(void)serializeObjectsFromData:(NSData *)data myBlock:(void (^)(NSArray * ))block
+-(void)serializeObjectsFromData:(NSData *)data myBlock:(void (^)(NSArray *, NSError *))block
 {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         NSError *error = nil;
@@ -60,16 +67,16 @@
         if (!error)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                block(dataArray);
+            block(dataArray,nil);
             });
         }
         else
         {
-            NSLog(@"Serialization error %@",error.description);
+            block(nil,error);
         }
             });
 }
--(void)updateContextWithObjects:(NSArray *)array withBlock: (void(^)()) block
+-(void)updateContextWithObjects:(NSArray *)array withEntity:(NSEntityDescription *)entity withBlock: (void(^)(NSError *)) block
 {
     [self.privateContext performBlock:^{
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.privateContext];
@@ -83,42 +90,66 @@
         NSError *error = nil;
         if (![self.privateContext save:&error]) {
             NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+            block(error);
             abort();
         }
         [self.context performBlockAndWait:^{
             NSError *error = nil;
             if (![self.context save:&error]) {
                 NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+                block(error);
                 abort();
             }
-            else{block();}
+            else{block(nil);}
         }];
     }];
 
 }
--(void)downloadNewMoviesFromPage:(int)pageCount withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block
+
+-(void)updateTableWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block
 {
-    if (mode) {
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.privateContext];
-        [self deleteObjectsWithEntity:entity withContext:self.privateContext];
-        pageCount=1;
-    }
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        NSString *url=[NSString stringWithFormat: @"%@%@&%@&%@=%d",moviesPopular,apiV3Key,lang,page,pageCount];
-        [self getObjectsFromURL:url withBlock:block];
+    [self getObjectsFromURL:url withBlock:^(NSArray *array,NSError *error)
+     {
+         if (error==nil) {
+             [self updateContextWithObjects:array withEntity:entity withBlock:^(NSError *error)
+              {
+                  if (error==nil)
+                  {
+                      if (mode)//if true-delete objects
+                      {
+                          [self deleteObjectsWithEntity:entity withContext:self.privateContext withBlock:^(NSError *error)
+                           {
+                               if (error==nil) {
+                                   block(nil);
+                               }
+                               else
+                               {
+                                   block(error);
+                               }
+                           }];
+                      }
+                      else{block(nil);}//if false-simple update
+                  }
+                  else{
+                      block(error);
+                  }
+              }];
+         }
+         else
+         {
+             block(error);
+         }
+     }];
     });
-    
-}
--(void)updateTableWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withBlock: (void(^)(NSError *)) block
-{
-    
 }
 
 -(void)deleteObjectsWithEntity:(NSEntityDescription *) entity withContext:(NSManagedObjectContext *)moc withBlock: (void(^)(NSError *)) block
 {
+    NSEntityDescription *entityDel = [NSEntityDescription entityForName:entity.name inManagedObjectContext:self.privateContext];
     [self.privateContext performBlock:^{
         NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-        [fetch setEntity:entity];
+        [fetch setEntity:entityDel];
         NSArray * result = [moc executeFetchRequest:fetch error:nil];
         for (NSManagedObject *movie in result)
         {

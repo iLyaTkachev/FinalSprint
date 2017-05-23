@@ -17,12 +17,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"details is loaded");
+    
     // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)done:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 /*

@@ -180,7 +180,7 @@
         <!--Details-->
         <scene sceneID="F2x-DE-sRE">
             <objects>
-                <viewController title="Details" id="ZQw-Qx-UPR" customClass="DetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailVC" title="Details" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ZQw-Qx-UPR" customClass="DetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3mf-Xo-0cn"/>
                         <viewControllerLayoutGuide type="bottom" id="Bdt-QK-uWv"/>
@@ -195,7 +195,13 @@
                                     <constraint firstAttribute="height" constant="44" id="ceq-yT-OHC"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Details" id="QUO-Qg-zLg"/>
+                                    <navigationItem title="Details" id="QUO-Qg-zLg">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="JoA-DI-GjW">
+                                            <connections>
+                                                <action selector="done:" destination="ZQw-Qx-UPR" id="R3o-bw-fHb"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rYi-Cy-e2j">
@@ -206,9 +212,6 @@
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <accessibility key="accessibilityConfiguration" identifier="Details">
-                            <bool key="isElement" value="NO"/>
-                        </accessibility>
                         <constraints>
                             <constraint firstItem="rYi-Cy-e2j" firstAttribute="top" secondItem="Z6b-Vm-5Y6" secondAttribute="bottom" symbolic="YES" id="2m5-Ic-Jvw"/>
                             <constraint firstItem="Z6b-Vm-5Y6" firstAttribute="leading" secondItem="a2a-v7-d2v" secondAttribute="leading" id="3Rn-6P-BAE"/>

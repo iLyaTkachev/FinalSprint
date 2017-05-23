@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) Provider *provider;
 @property (nonatomic,strong) NSArray *dataArray;
+@property(nonatomic,strong) NSEntityDescription *movieEntity;
 @end
 
 
@@ -27,7 +28,8 @@
 
 int pageCount;
 int cellsCount;
-bool *downloadFlag;
+bool downloadFlag;
+bool downloadingError;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,6 +39,9 @@ bool *downloadFlag;
     self.context = delegate.managedObjectContext;
     self.provider=[[Provider alloc]initWithContext:delegate.managedObjectContext];
     pageCount=1;
+    downloadFlag=true;
+    downloadingError=false;
+    self.movieEntity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
@@ -48,15 +53,27 @@ bool *downloadFlag;
 }
 - (IBAction)update:(id)sender {
     
-    //DetailViewController *details=[[DetailViewController alloc]init];
-    //UINavigationController *navigationController1 = [[UINavigationController alloc] initWithRootViewController:self];
-    //[navigationController1 pushViewController:details animated:YES];
-    
-    DetailViewController *detailVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailVC"];
-    //inboxVC.soapiController = _soapiController;
-    [[self navigationController] pushViewController:detailVC animated:YES];
-
+    DetailViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
+    //[self.navigationController pushViewController:detailVC animated:YES];
+    [self presentViewController:detailVC animated:YES completion:nil];
 }
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Create a view controller with the title as its
+    // navigation title and push it.
+    NSUInteger row = indexPath.row;
+    if (row != NSNotFound)
+    {
+        // Create the view controller and initialize it with the
+        // next level of data.
+        DetailViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
+        [[self navigationController] pushViewController:viewController animated:YES];
+    }
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -70,8 +87,6 @@ bool *downloadFlag;
     //NSLog(@"message from cellForRowAtIndexPath %d",indexPath.row);
     //NSLog(@"offset === %f === %f",self.myTableView.contentOffset.y,(self.myTableView.contentSize.height - self.myTableView.frame.size.height*2));
     
-    
-                                                                                         
     return cell;
 }
 
@@ -79,28 +94,51 @@ bool *downloadFlag;
 {
     if(self.myTableView.contentOffset.y >= (self.myTableView.contentSize.height - self.myTableView.frame.size.height*2) && self.myTableView.contentSize.height>0)
     {
-        NSLog(@"downloading");
-        [self.activityIndicator startAnimating];
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            [self.provider downloadNewMoviesFromPage:pageCount withDeleting:false withBlock:^(void)
-             {
-                 [self.activityIndicator stopAnimating];
-                 pageCount++;
-             }];
+            if (downloadFlag)
+            {
+                NSLog(@"downloading");
+                [self.activityIndicator startAnimating];
+                [self downloadMoviesWithDeleting:false];
+            }
         });
     }
     else if(self.myTableView.contentOffset.y<-120)
     {
-        NSLog(@"updating");
-        [self.activityIndicator startAnimating];
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            [self.provider downloadNewMoviesFromPage:pageCount withDeleting:true withBlock:^(void)
-             {
-                 [self.activityIndicator stopAnimating];
-                 pageCount=2;
-             }];
+            if (downloadFlag)
+            {
+                NSLog(@"updating");
+                [self.activityIndicator startAnimating];
+                pageCount=1;
+                [self downloadMoviesWithDeleting:true];
+            }
+            else if(downloadFlag && downloadingError)
+            {
+                
+            }
         });
     }
+
+}
+
+-(void)downloadMoviesWithDeleting:(bool)mode
+{
+    downloadFlag=false;
+    NSString *url=[NSString stringWithFormat: @"%@%@&%@&%@=%d",moviesPopular,apiV3Key,lang,page,pageCount];
+    [self.provider updateTableWithEntity:self.movieEntity withUrl:url withDeleting:mode withBlock:^(NSError *error)
+     {
+         if (error==nil) {
+             [self.activityIndicator stopAnimating];
+             pageCount++;
+         }
+         else{
+             NSLog(@"Updating error: %@",error.description);
+             [self.activityIndicator stopAnimating];
+             downloadingError=true;
+         }
+         downloadFlag=true;
+     }];
 
 }
 
