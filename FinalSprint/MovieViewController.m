@@ -54,10 +54,12 @@ bool downloadingError;
 - (IBAction)update:(id)sender {
     
     DetailViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
-    //[self.navigationController pushViewController:detailVC animated:YES];
-    [self presentViewController:detailVC animated:YES completion:nil];
+    [self.navigationController pushViewController:detailVC animated:YES];
+    //[self presentViewController:detailVC animated:YES completion:nil];
 }
 
+//uicollectionview; flow layout=horizontal
+//urlcache
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -94,30 +96,26 @@ bool downloadingError;
 {
     if(self.myTableView.contentOffset.y >= (self.myTableView.contentSize.height - self.myTableView.frame.size.height*2) && self.myTableView.contentSize.height>0)
     {
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             if (downloadFlag)
             {
                 NSLog(@"downloading");
                 [self.activityIndicator startAnimating];
                 [self downloadMoviesWithDeleting:false];
             }
-        });
     }
     else if(self.myTableView.contentOffset.y<-120)
     {
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             if (downloadFlag)
             {
                 NSLog(@"updating");
                 [self.activityIndicator startAnimating];
                 pageCount=1;
-                [self downloadMoviesWithDeleting:false];
+                [self downloadMoviesWithDeleting:true];
             }
             else if(downloadFlag && downloadingError)
             {
                 
             }
-        });
     }
 
 }
@@ -125,6 +123,7 @@ bool downloadingError;
 -(void)downloadMoviesWithDeleting:(bool)mode
 {
     downloadFlag=false;
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
     NSString *url=[NSString stringWithFormat: @"%@%@&%@&%@=%d",moviesPopular,apiV3Key,lang,page,pageCount];
     [self.provider updateTableWithEntity:self.movieEntity withUrl:url withDeleting:mode withBlock:^(NSError *error)
      {
@@ -139,7 +138,7 @@ bool downloadingError;
          }
          downloadFlag=true;
      }];
-
+    });
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

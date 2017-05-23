@@ -182,6 +182,7 @@
                 block(error);
                 abort();
             }
+            block(nil);
         }];
     }];
 
