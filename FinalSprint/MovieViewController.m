@@ -111,7 +111,7 @@ bool downloadingError;
                 NSLog(@"updating");
                 [self.activityIndicator startAnimating];
                 pageCount=1;
-                [self downloadMoviesWithDeleting:true];
+                [self downloadMoviesWithDeleting:false];
             }
             else if(downloadFlag && downloadingError)
             {

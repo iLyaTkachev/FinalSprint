@@ -109,45 +109,59 @@
 -(void)updateTableWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block
 {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-    [self getObjectsFromURL:url withBlock:^(NSArray *array,NSError *error)
-     {
-         if (error==nil) {
-             [self updateContextWithObjects:array withEntity:entity withBlock:^(NSError *error)
-              {
-                  if (error==nil)
-                  {
-                      if (mode)//if true-delete objects
-                      {
-                          [self deleteObjectsWithEntity:entity withContext:self.privateContext withBlock:^(NSError *error)
-                           {
-                               if (error==nil) {
-                                   block(nil);
-                               }
-                               else
-                               {
-                                   block(error);
-                               }
-                           }];
-                      }
-                      else{block(nil);}//if false-simple update
-                  }
-                  else{
-                      block(error);
-                  }
-              }];
-         }
-         else
+        [self getObjectsFromURL:url withBlock:^(NSArray *array,NSError *error)
          {
-             block(error);
-         }
-     }];
+             if (error==nil) {
+                 if (mode)//if true-delete objects
+                 {
+                     [self deleteObjectsWithEntity:entity withContext:self.privateContext withBlock:^(NSError *error)
+                      {
+                          if (error==nil) {
+                              [self updateContextWithObjects:array withEntity:entity withBlock:^(NSError *error)
+                               {
+                                   if (error==nil)
+                                   {
+                                       block(nil);
+                                   }
+                                   else
+                                   {
+                                       block(error);
+                                   }
+                               }];
+                          }
+                          else
+                          {
+                              block(error);
+                          }
+                      }];
+                 }
+                 else//if false-simple update
+                 {
+                     [self updateContextWithObjects:array withEntity:entity withBlock:^(NSError *error)
+                      {
+                          if (error==nil)
+                          {
+                              block(nil);
+                          }
+                          else
+                          {
+                              block(error);
+                          }
+                      }];
+                 }
+             }
+             else
+             {
+                 block(error);
+             }
+         }];
     });
-}
+    }
 
 -(void)deleteObjectsWithEntity:(NSEntityDescription *) entity withContext:(NSManagedObjectContext *)moc withBlock: (void(^)(NSError *)) block
 {
-    NSEntityDescription *entityDel = [NSEntityDescription entityForName:entity.name inManagedObjectContext:self.privateContext];
-    [self.privateContext performBlock:^{
+    NSEntityDescription *entityDel = [NSEntityDescription entityForName:entity.name inManagedObjectContext:moc];
+    [moc performBlock:^{
         NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
         [fetch setEntity:entityDel];
         NSArray * result = [moc executeFetchRequest:fetch error:nil];
