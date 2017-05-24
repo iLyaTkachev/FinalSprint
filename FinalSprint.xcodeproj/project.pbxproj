@@ -34,7 +34,7 @@
 		099F56B71ED5BFED004C15FD /* no_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F56B61ED5BFED004C15FD /* no_image.png */; };
 		099F56B91ED5C00F004C15FD /* star_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F56B81ED5C00F004C15FD /* star_filled.png */; };
 		099F56BB1ED5C024004C15FD /* star_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F56BA1ED5C024004C15FD /* star_empty.png */; };
-		099F56C01ED5CEFA004C15FD /* EntityParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 099F56BF1ED5CEFA004C15FD /* EntityParser.m */; };
+		099F56C41ED5D79F004C15FD /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 099F56C31ED5D79F004C15FD /* JsonParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,8 +79,8 @@
 		099F56B61ED5BFED004C15FD /* no_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_image.png; sourceTree = "<group>"; };
 		099F56B81ED5C00F004C15FD /* star_filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_filled.png; sourceTree = "<group>"; };
 		099F56BA1ED5C024004C15FD /* star_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_empty.png; sourceTree = "<group>"; };
-		099F56BE1ED5CEFA004C15FD /* EntityParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityParser.h; sourceTree = "<group>"; };
-		099F56BF1ED5CEFA004C15FD /* EntityParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityParser.m; sourceTree = "<group>"; };
+		099F56C21ED5D79F004C15FD /* JsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonParser.h; sourceTree = "<group>"; };
+		099F56C31ED5D79F004C15FD /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,10 +180,9 @@
 		0966F7651ECA3DDA00DC248F /* Provider */ = {
 			isa = PBXGroup;
 			children = (
+				099F56C11ED5D770004C15FD /* JSON_Parser */,
 				0966F7661ECA3DFD00DC248F /* Provider.h */,
 				0966F7671ECA3DFD00DC248F /* Provider.m */,
-				099F56BE1ED5CEFA004C15FD /* EntityParser.h */,
-				099F56BF1ED5CEFA004C15FD /* EntityParser.m */,
 			);
 			name = Provider;
 			sourceTree = "<group>";
@@ -214,6 +213,15 @@
 				09265B011EBC4D2E00AC31CD /* film.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		099F56C11ED5D770004C15FD /* JSON_Parser */ = {
+			isa = PBXGroup;
+			children = (
+				099F56C21ED5D79F004C15FD /* JsonParser.h */,
+				099F56C31ED5D79F004C15FD /* JsonParser.m */,
+			);
+			name = JSON_Parser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,13 +314,13 @@
 				094B11F21EC5D48300B2E0EC /* Actor+CoreDataClass.m in Sources */,
 				094B11DA1EC5C9A400B2E0EC /* MovieTableViewCell.m in Sources */,
 				094B11FA1EC5F02500B2E0EC /* Movie+CoreDataClass.m in Sources */,
+				099F56C41ED5D79F004C15FD /* JsonParser.m in Sources */,
 				09265AE41EBB21EA00AC31CD /* AppDelegate.m in Sources */,
 				094B11F31EC5D48300B2E0EC /* Actor+CoreDataProperties.m in Sources */,
 				098524B81ED24F0A00B15D92 /* DetailViewController.m in Sources */,
 				0966F7641ECA3DA500DC248F /* URLConnection.m in Sources */,
 				09265AE11EBB21EA00AC31CD /* main.m in Sources */,
 				09603EFC1EC25A2400A02FB3 /* MovieViewController.m in Sources */,
-				099F56C01ED5CEFA004C15FD /* EntityParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

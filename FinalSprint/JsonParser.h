@@ -1,5 +1,5 @@
 //
-//  EntityParser.h
+//  JsonParser.h
 //  FinalSprint
 //
 //  Created by iLya Tkachev on 5/24/17.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface EntityParser : NSObject
+@interface JsonParser : NSObject
 
 -(void)newMovie:(NSObject *)newObject from:(NSDictionary *)jsonObject;
 

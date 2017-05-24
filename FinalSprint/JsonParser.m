@@ -1,14 +1,14 @@
 //
-//  EntityParser.m
+//  JsonParser.m
 //  FinalSprint
 //
 //  Created by iLya Tkachev on 5/24/17.
 //  Copyright © 2017 iLya Tkachev. All rights reserved.
 //
 
-#import "EntityParser.h"
+#import "JsonParser.h"
 
-@implementation EntityParser
+@implementation JsonParser
 
 -(void)newMovie:(NSObject *)newObject from:(NSDictionary *)jsonObject
 {
@@ -20,7 +20,7 @@
     [newObject setValue:[jsonObject objectForKey:@"title"] forKey:@"title"];
     [newObject setValue:[jsonObject objectForKey:@"popularity"] forKey:@"popularity"];
     [newObject setValue:[jsonObject objectForKey:@"vote_average"] forKey:@"voteAverage"];
-
+    
 }
 
 @end

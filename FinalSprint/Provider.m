@@ -10,7 +10,6 @@
 #import "URLConnection.h"
 #import "Movie+CoreDataClass.h"
 #import "Constants.h"
-#import "EntityParser.h";
 
 @implementation Provider
 @synthesize imageDict=imgDict;
@@ -24,7 +23,7 @@
         self.privateContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
         [self.privateContext setParentContext:self.context];
         imgDict = [[NSMutableDictionary alloc]init];
-        
+        self.parser=[[JsonParser alloc]init];
     }
     return self;
 }
@@ -79,12 +78,11 @@
 }
 -(void)updateContextWithObjects:(NSArray *)array withEntity:(NSEntityDescription *)entity1 withBlock: (void(^)(NSError *)) block
 {
-    EntityParser *ent=[[EntityParser alloc]init];
     [self.privateContext performBlock:^{
         NSEntityDescription *entity = [NSEntityDescription entityForName:entity1.name inManagedObjectContext:self.privateContext];
         for (NSDictionary *jsonObject in array) {
             NSManagedObject *newMovie=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
-            [ent newMovie:newMovie from:jsonObject];
+            [self.parser newMovie:newMovie from:jsonObject];
             /*[newMovie setValue:[jsonObject objectForKey:@"poster_path"] forKey:@"posterPath"];
             [newMovie setValue:[jsonObject objectForKey:@"overview"] forKey:@"overview"];
             [newMovie setValue:[jsonObject objectForKey:@"release_date"] forKey:@"releaseDate"];
@@ -196,7 +194,7 @@
 
 }
 
--(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *)) block
+-(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *,NSError *)) block
 {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void)
     {
@@ -213,13 +211,14 @@
                  {
                      [imgDict setObject:image forKey:url];
                      dispatch_async(dispatch_get_main_queue(), ^{
-                         block(image);
+                         block(image,nil);
                      });
                  }
              }
              else
              {
                  NSLog(@"Image download error: %@",error.description);
+                 block(nil,error);
              }
          }];
     }
@@ -227,7 +226,7 @@
     {
         UIImage *existingImg =[imgDict objectForKey:url];
         dispatch_async(dispatch_get_main_queue(), ^{
-            block(existingImg);
+            block(existingImg,nil);
         });
     }
     });

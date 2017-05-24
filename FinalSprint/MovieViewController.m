@@ -13,7 +13,6 @@
 #import "Movie+CoreDataClass.h"
 #import "Constants.h"
 #import "DetailViewController.h"
-#import "EntityParser.h"
 
 @interface MovieViewController ()
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -28,6 +27,7 @@
 @implementation MovieViewController
 
 int pageCount;
+int oldPageCount;
 int cellsCount;
 bool downloadFlag;
 bool downloadingError;
@@ -49,7 +49,7 @@ bool downloadingError;
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         exit(-1);  // Fail
     }
-    
+    [self downloadMoviesWithDeleting:true];
    
 }
 - (IBAction)update:(id)sender {
@@ -87,7 +87,7 @@ bool downloadingError;
 {
     MovieTableViewCell *cell = (MovieTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"MovieCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
-    NSLog(@"message from cellForRowAtIndexPath %d",indexPath.row);
+    //NSLog(@"message from cellForRowAtIndexPath %d",indexPath.row);
     //NSLog(@"offset === %f === %f",self.myTableView.contentOffset.y,(self.myTableView.contentSize.height - self.myTableView.frame.size.height*2));
     
     return cell;
@@ -106,16 +106,13 @@ bool downloadingError;
     }
     else if(self.myTableView.contentOffset.y<-120)
     {
-            if (downloadFlag)
+            if (downloadFlag && !downloadingError)
             {
                 NSLog(@"updating");
                 [self.activityIndicator startAnimating];
+                oldPageCount=pageCount;
                 pageCount=1;
                 [self downloadMoviesWithDeleting:true];
-            }
-            else if(downloadFlag && downloadingError)
-            {
-                
             }
     }
 
@@ -129,6 +126,7 @@ bool downloadingError;
     [self.provider updateTableWithEntity:self.movieEntity withUrl:url withDeleting:mode withBlock:^(NSError *error)
      {
          if (error==nil) {
+             downloadingError=false;
              [self.activityIndicator stopAnimating];
              pageCount++;
          }
@@ -136,6 +134,7 @@ bool downloadingError;
              NSLog(@"Updating error: %@",error.description);
              [self.activityIndicator stopAnimating];
              downloadingError=true;
+             pageCount=oldPageCount;
          }
          downloadFlag=true;
      }];
@@ -156,11 +155,13 @@ bool downloadingError;
     cell.title.text = movie.title;
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
     NSString *path=[NSString stringWithFormat: @"%@%@", moviePosterImagesDB, movie.posterPath];
-    [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img)
+    [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img,NSError *error)
     {
-        if (cell.tag == indexPath.row) {
-            cell.posterImage.image = img;
-            [cell setNeedsLayout];
+        if (error==nil) {
+            if (cell.tag == indexPath.row) {
+                cell.posterImage.image = img;
+                [cell setNeedsLayout];
+            }
         }
     }];
 }
