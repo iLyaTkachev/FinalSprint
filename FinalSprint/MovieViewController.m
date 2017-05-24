@@ -16,11 +16,14 @@
 
 @interface MovieViewController ()
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *genreButton;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) Provider *provider;
 @property (nonatomic,strong) NSArray *dataArray;
 @property(nonatomic,strong) NSEntityDescription *movieEntity;
+@property(nonatomic,strong) UIImage *noImage;
+@property(nonatomic,strong) NSString *sortingKey;
 @end
 
 
@@ -43,6 +46,8 @@ bool downloadingError;
     downloadFlag=true;
     downloadingError=false;
     self.movieEntity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
+    self.noImage=[UIImage imageNamed:@"no_image.png"];
+    self.sortingKey=@"popularity";
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
@@ -52,11 +57,39 @@ bool downloadingError;
     [self downloadMoviesWithDeleting:true];
    
 }
+- (IBAction)GenreClick:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"Pop"];
+    
+    // present the controller
+    // on iPad, this will be a Popover
+    // on iPhone, this will be an action sheet
+    controller.modalPresentationStyle = UIModalPresentationPopover;
+    [self presentViewController:controller animated:YES completion:nil];
+    
+    // configure the Popover presentation controller
+    UIPopoverPresentationController *popController = [controller popoverPresentationController];
+    popController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    popController.barButtonItem = self.genreButton;
+    popController.delegate = self;}
 - (IBAction)update:(id)sender {
     
-    DetailViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
-    [self.navigationController pushViewController:detailVC animated:YES];
+    //DetailViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
+    //[self.navigationController pushViewController:detailVC animated:YES];
+    
     //[self presentViewController:detailVC animated:YES completion:nil];
+    
+    self.sortingKey=@"voteAverage";
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:self.sortingKey ascending:NO];
+    [[self.fetchedResultsController fetchRequest]setSortDescriptors:[NSArray arrayWithObject:sort]];
+    NSError *error;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        // Update to handle the error appropriately.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        exit(-1);  // Fail
+    }
+    [self.myTableView reloadData];
+    //[self.myTableView beginUpdates];
 }
 
 //uicollectionview; flow layout=horizontal
@@ -149,7 +182,7 @@ bool downloadingError;
 }
 
 - (void)configureCell:(MovieTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    cell.posterImage.image=NULL;
+    cell.posterImage.image=self.noImage;
     cell.tag = indexPath.row;
     Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.title.text = movie.title;
@@ -162,6 +195,9 @@ bool downloadingError;
                 cell.posterImage.image = img;
                 [cell setNeedsLayout];
             }
+        }
+        else{
+            
         }
     }];
 }
@@ -189,7 +225,7 @@ bool downloadingError;
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
     [fetchRequest setEntity:entity];
     
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"popularity" ascending:NO];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:self.sortingKey ascending:NO];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sort]];
     
     [fetchRequest setFetchBatchSize:20];

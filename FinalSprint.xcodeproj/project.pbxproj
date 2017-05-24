@@ -35,6 +35,8 @@
 		099F56B91ED5C00F004C15FD /* star_filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F56B81ED5C00F004C15FD /* star_filled.png */; };
 		099F56BB1ED5C024004C15FD /* star_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 099F56BA1ED5C024004C15FD /* star_empty.png */; };
 		099F56C41ED5D79F004C15FD /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 099F56C31ED5D79F004C15FD /* JsonParser.m */; };
+		099F56C91ED5F85C004C15FD /* PopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099F56C81ED5F85C004C15FD /* PopViewController.m */; };
+		099F56D21ED600B5004C15FD /* PopTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 099F56D11ED600B5004C15FD /* PopTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +83,10 @@
 		099F56BA1ED5C024004C15FD /* star_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_empty.png; sourceTree = "<group>"; };
 		099F56C21ED5D79F004C15FD /* JsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonParser.h; sourceTree = "<group>"; };
 		099F56C31ED5D79F004C15FD /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
+		099F56C71ED5F85C004C15FD /* PopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopViewController.h; sourceTree = "<group>"; };
+		099F56C81ED5F85C004C15FD /* PopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopViewController.m; sourceTree = "<group>"; };
+		099F56D01ED600B5004C15FD /* PopTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopTableViewCell.h; sourceTree = "<group>"; };
+		099F56D11ED600B5004C15FD /* PopTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,7 @@
 		09265ADE1EBB21EA00AC31CD /* FinalSprint */ = {
 			isa = PBXGroup;
 			children = (
+				099F56CC1ED6002B004C15FD /* Table Cells */,
 				099F56BC1ED5C5DC004C15FD /* Constants */,
 				0966F7651ECA3DDA00DC248F /* Provider */,
 				094B11E11EC5D3AC00B2E0EC /* Model */,
@@ -142,6 +149,8 @@
 		094B11D01EC4D08D00B2E0EC /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				099F56CB1ED6000D004C15FD /* Table Cells */,
+				099F56CA1ED5FFE8004C15FD /* TableCells */,
 				0966F7621ECA3DA500DC248F /* URLConnection.h */,
 				0966F7631ECA3DA500DC248F /* URLConnection.m */,
 			);
@@ -167,10 +176,10 @@
 		09603EFD1EC25A3100A02FB3 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				099F56C71ED5F85C004C15FD /* PopViewController.h */,
+				099F56C81ED5F85C004C15FD /* PopViewController.m */,
 				09603EFA1EC25A2400A02FB3 /* MovieViewController.h */,
 				09603EFB1EC25A2400A02FB3 /* MovieViewController.m */,
-				094B11D81EC5C9A400B2E0EC /* MovieTableViewCell.h */,
-				094B11D91EC5C9A400B2E0EC /* MovieTableViewCell.m */,
 				098524B61ED24F0A00B15D92 /* DetailViewController.h */,
 				098524B71ED24F0A00B15D92 /* DetailViewController.m */,
 			);
@@ -222,6 +231,31 @@
 				099F56C31ED5D79F004C15FD /* JsonParser.m */,
 			);
 			name = JSON_Parser;
+			sourceTree = "<group>";
+		};
+		099F56CA1ED5FFE8004C15FD /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = TableCells;
+			sourceTree = "<group>";
+		};
+		099F56CB1ED6000D004C15FD /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Table Cells";
+			sourceTree = "<group>";
+		};
+		099F56CC1ED6002B004C15FD /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				094B11D81EC5C9A400B2E0EC /* MovieTableViewCell.h */,
+				094B11D91EC5C9A400B2E0EC /* MovieTableViewCell.m */,
+				099F56D01ED600B5004C15FD /* PopTableViewCell.h */,
+				099F56D11ED600B5004C15FD /* PopTableViewCell.m */,
+			);
+			name = "Table Cells";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,9 +346,11 @@
 				094B11CD1EC4C99D00B2E0EC /* Constants.m in Sources */,
 				0966F7681ECA3DFD00DC248F /* Provider.m in Sources */,
 				094B11F21EC5D48300B2E0EC /* Actor+CoreDataClass.m in Sources */,
+				099F56C91ED5F85C004C15FD /* PopViewController.m in Sources */,
 				094B11DA1EC5C9A400B2E0EC /* MovieTableViewCell.m in Sources */,
 				094B11FA1EC5F02500B2E0EC /* Movie+CoreDataClass.m in Sources */,
 				099F56C41ED5D79F004C15FD /* JsonParser.m in Sources */,
+				099F56D21ED600B5004C15FD /* PopTableViewCell.m in Sources */,
 				09265AE41EBB21EA00AC31CD /* AppDelegate.m in Sources */,
 				094B11F31EC5D48300B2E0EC /* Actor+CoreDataProperties.m in Sources */,
 				098524B81ED24F0A00B15D92 /* DetailViewController.m in Sources */,
