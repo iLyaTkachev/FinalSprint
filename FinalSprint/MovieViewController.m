@@ -13,6 +13,7 @@
 #import "Movie+CoreDataClass.h"
 #import "Constants.h"
 #import "DetailViewController.h"
+#import "EntityParser.h"
 
 @interface MovieViewController ()
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
