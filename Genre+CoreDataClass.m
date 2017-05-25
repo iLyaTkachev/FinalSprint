@@ -1,16 +1,14 @@
 //
-//  Movie+CoreDataClass.m
+//  Genre+CoreDataClass.m
 //  FinalSprint
 //
 //  Created by iLya Tkachev on 5/25/17.
 //  Copyright © 2017 iLya Tkachev. All rights reserved.
 //
 
-#import "Movie+CoreDataClass.h"
-#import "Actor+CoreDataClass.h"
-
 #import "Genre+CoreDataClass.h"
+#import "Movie+CoreDataClass.h"
 
-@implementation Movie
+@implementation Genre
 
 @end

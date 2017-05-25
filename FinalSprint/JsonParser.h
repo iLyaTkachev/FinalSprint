@@ -11,5 +11,6 @@
 @interface JsonParser : NSObject
 
 -(void)newMovie:(NSObject *)newObject from:(NSDictionary *)jsonObject;
+-(void)newGenre:(NSObject *)newObject from:(NSDictionary *)jsonObject;
 
 @end

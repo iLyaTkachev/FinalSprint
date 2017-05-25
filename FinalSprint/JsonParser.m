@@ -25,6 +25,7 @@
 
 -(void)newGenre:(NSObject *)newObject from:(NSDictionary *)jsonObject
 {
-    
+    [newObject setValue:[jsonObject objectForKey:@"id"] forKey:@"genreID"];
+    [newObject setValue:[jsonObject objectForKey:@"name"] forKey:@"name"];
 }
 @end

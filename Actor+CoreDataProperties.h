@@ -2,7 +2,7 @@
 //  Actor+CoreDataProperties.h
 //  FinalSprint
 //
-//  Created by iLya Tkachev on 5/12/17.
+//  Created by iLya Tkachev on 5/25/17.
 //  Copyright © 2017 iLya Tkachev. All rights reserved.
 //
 
@@ -15,9 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<Actor *> *)fetchRequest;
 
-@property (nullable, nonatomic, copy) NSString *name;
 @property (nonatomic) int32_t id;
+@property (nullable, nonatomic, copy) NSString *name;
 @property (nullable, nonatomic, copy) NSString *profilePath;
+@property (nullable, nonatomic, retain) Movie *movies;
 
 @end
 

@@ -1,5 +1,5 @@
 //
-//  Actor+CoreDataClass.h
+//  Genre+CoreDataClass.h
 //  FinalSprint
 //
 //  Created by iLya Tkachev on 5/25/17.
@@ -13,10 +13,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Actor : NSManagedObject
+@interface Genre : NSManagedObject
 
 @end
 
 NS_ASSUME_NONNULL_END
 
-#import "Actor+CoreDataProperties.h"
+#import "Genre+CoreDataProperties.h"

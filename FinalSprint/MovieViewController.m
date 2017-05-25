@@ -66,7 +66,7 @@ bool downloadingError;
         exit(-1);  // Fail
     }
     [self downloadMoviesWithDeleting:true];
-    [self.provider getGenresArray];
+    //[self.provider getGenresArray];
 }
 - (IBAction)genreClick:(id)sender {
     

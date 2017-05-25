@@ -2,7 +2,7 @@
 //  Actor+CoreDataProperties.m
 //  FinalSprint
 //
-//  Created by iLya Tkachev on 5/12/17.
+//  Created by iLya Tkachev on 5/25/17.
 //  Copyright © 2017 iLya Tkachev. All rights reserved.
 //
 
@@ -14,8 +14,9 @@
 	return [[NSFetchRequest alloc] initWithEntityName:@"Actor"];
 }
 
-@dynamic name;
 @dynamic id;
+@dynamic name;
 @dynamic profilePath;
+@dynamic movies;
 
 @end

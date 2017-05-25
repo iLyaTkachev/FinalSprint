@@ -2,7 +2,7 @@
 //  Movie+CoreDataProperties.h
 //  FinalSprint
 //
-//  Created by iLya Tkachev on 5/12/17.
+//  Created by iLya Tkachev on 5/25/17.
 //  Copyright © 2017 iLya Tkachev. All rights reserved.
 //
 
@@ -15,16 +15,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSFetchRequest<Movie *> *)fetchRequest;
 
-@property (nullable, nonatomic, copy) NSString *title;
-@property (nullable, nonatomic, copy) NSString *posterPath;
-@property (nullable, nonatomic, copy) NSString *overview;
-@property (nullable, nonatomic, copy) NSString *releaseDate;
-@property (nonatomic) int64_t movieID;
 @property (nullable, nonatomic, copy) NSString *backdropPath;
+@property (nonatomic) int64_t movieID;
+@property (nullable, nonatomic, copy) NSString *overview;
 @property (nonatomic) float popularity;
-@property (nonatomic) int32_t voteCount;
+@property (nullable, nonatomic, copy) NSString *posterPath;
+@property (nullable, nonatomic, copy) NSString *releaseDate;
+@property (nullable, nonatomic, copy) NSNumber *runtime;
+@property (nullable, nonatomic, copy) NSString *title;
 @property (nonatomic) float voteAverage;
+@property (nonatomic) int32_t voteCount;
 @property (nullable, nonatomic, retain) NSSet<Actor *> *actors;
+@property (nullable, nonatomic, retain) Genre *genres;
 
 @end
 

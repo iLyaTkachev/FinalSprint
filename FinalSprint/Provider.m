@@ -41,6 +41,7 @@
               {
                   if (serializeError==nil) {
                       objArray=[array valueForKey:@"results"];
+                      //objArray=[array valueForKey:@"genres"];
                       block(objArray,nil);
                   }
                   //[self updateContextWithObjects:objArray withBlock:block ];
@@ -88,13 +89,13 @@
                 [self.parser newMovie:newItem from:jsonObject];
             }
         }
-        /*else if([entity1.name isEqualToString:@"Genre"])
+        else if([entity1.name isEqualToString:@"Genre"])
         {
             for (NSDictionary *jsonObject in array) {
                 NSManagedObject *newItem=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
-                [self.parser newMovie:newItem from:jsonObject];
+                [self.parser newGenre:newItem from:jsonObject];
             }
-        }*/
+        }
                 NSError *error = nil;
         if (![self.privateContext save:&error]) {
             NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
@@ -243,12 +244,21 @@
 
 -(void)getGenresArray{
     NSString *url=[NSString stringWithFormat: @"%@%@&%@",movieGenres,apiV3Key,lang];
-    NSEntityDescription *entityDel = [NSEntityDescription entityForName:@"Genre" inManagedObjectContext:self.context];
-    [self updateTableWithEntity:entityDel withUrl:url withDeleting:YES withBlock:^(NSError *error)
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Genre" inManagedObjectContext:self.context];
+    [self updateTableWithEntity:entity withUrl:url withDeleting:NO withBlock:^(NSError *error)
      {
          if (error!=nil) {
              NSLog(@"%@",error.description);
          }
      }];
+    
+    NSFetchRequest *fetch = [[NSFetchRequest alloc] init];
+    [fetch setEntity:entity];
+    NSArray * result = [self.context executeFetchRequest:fetch error:nil];
+    for (NSDictionary *movie in result)
+    {
+        NSLog(@"%@",[movie valueForKey:@"name"]);
+    }
+
 }
 @end
