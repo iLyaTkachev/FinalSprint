@@ -80,20 +80,22 @@
 {
     [self.privateContext performBlock:^{
         NSEntityDescription *entity = [NSEntityDescription entityForName:entity1.name inManagedObjectContext:self.privateContext];
-        for (NSDictionary *jsonObject in array) {
-            NSManagedObject *newMovie=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
-            [self.parser newMovie:newMovie from:jsonObject];
-            /*[newMovie setValue:[jsonObject objectForKey:@"poster_path"] forKey:@"posterPath"];
-            [newMovie setValue:[jsonObject objectForKey:@"overview"] forKey:@"overview"];
-            [newMovie setValue:[jsonObject objectForKey:@"release_date"] forKey:@"releaseDate"];
-            //=====([newMovie setValue:[jsonObject objectForKey:@"genre_ids"]) forKey:@"releaseDate"];
-            
-            [newMovie setValue:[jsonObject objectForKey:@"title"] forKey:@"title"];
-            [newMovie setValue:[jsonObject objectForKey:@"popularity"] forKey:@"popularity"];
-            [newMovie setValue:[jsonObject objectForKey:@"vote_average"] forKey:@"voteAverage"];
-             */
+        
+        if ([entity1.name isEqualToString:@"Movie"])
+        {
+            for (NSDictionary *jsonObject in array) {
+                NSManagedObject *newItem=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
+                [self.parser newMovie:newItem from:jsonObject];
+            }
         }
-        NSError *error = nil;
+        /*else if([entity1.name isEqualToString:@"Genre"])
+        {
+            for (NSDictionary *jsonObject in array) {
+                NSManagedObject *newItem=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
+                [self.parser newMovie:newItem from:jsonObject];
+            }
+        }*/
+                NSError *error = nil;
         if (![self.privateContext save:&error]) {
             NSLog(@"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
             block(error);
@@ -232,4 +234,21 @@
     });
 }
 
+-(NSArray *)getSortingArray{
+    NSMutableArray *arr=[[NSMutableArray alloc]init];
+    [arr addObject:@"Popularity"];
+    [arr addObject:@"Top Rated"];
+    return arr;
+}
+
+-(void)getGenresArray{
+    NSString *url=[NSString stringWithFormat: @"%@%@&%@",movieGenres,apiV3Key,lang];
+    NSEntityDescription *entityDel = [NSEntityDescription entityForName:@"Genre" inManagedObjectContext:self.context];
+    [self updateTableWithEntity:entityDel withUrl:url withDeleting:YES withBlock:^(NSError *error)
+     {
+         if (error!=nil) {
+             NSLog(@"%@",error.description);
+         }
+     }];
+}
 @end

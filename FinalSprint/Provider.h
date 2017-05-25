@@ -19,5 +19,7 @@
 -(id)initWithContext:(NSManagedObjectContext *)context;
 -(void)updateTableWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block;
 -(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *,NSError *)) block;
+-(NSArray *)getSortingArray;
+-(void)getGenresArray;
 
 @end

@@ -23,4 +23,8 @@
     
 }
 
+-(void)newGenre:(NSObject *)newObject from:(NSDictionary *)jsonObject
+{
+    
+}
 @end

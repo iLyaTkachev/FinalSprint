@@ -18,5 +18,6 @@ extern NSString * const moviePosterImagesDB;
 extern NSString * const moviesPopular;
 extern NSString * const lang;
 extern NSString * const page;
+extern NSString * const movieGenres;
 
 @end

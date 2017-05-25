@@ -17,12 +17,22 @@
 
 @synthesize dataArray=dataArray;
 
+-(id)initWithArray:(NSArray *)array withBlock:(void(^)()) block
+{
+    self=[super init];
+    if(self)
+    {
+        self.dataArray=array;
+        self.myBlock=block;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // add touch recogniser to dismiss this controller
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissMe)];
-    [self.view addGestureRecognizer:tap];
+    //UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissMe)];
+    //[self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,6 +56,12 @@
     
     cell.genre.text=[dataArray objectAtIndex:indexPath.row];
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.selectedGenre=[self.dataArray objectAtIndex:indexPath.row];
+    self.myBlock();
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

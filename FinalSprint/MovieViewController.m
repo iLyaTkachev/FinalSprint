@@ -13,17 +13,23 @@
 #import "Movie+CoreDataClass.h"
 #import "Constants.h"
 #import "DetailViewController.h"
+#import "PopViewController.h"
 
 @interface MovieViewController ()
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *genreButton;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) Provider *provider;
-@property (nonatomic,strong) NSArray *dataArray;
+//@property (nonatomic,strong) NSArray *dataArray;
 @property(nonatomic,strong) NSEntityDescription *movieEntity;
 @property(nonatomic,strong) UIImage *noImage;
 @property(nonatomic,strong) NSString *sortingKey;
+@property(nonatomic,strong) NSString *genreKey;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *genreButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *sortButton;
+@property(nonatomic,strong) PopViewController *genreVC;
+@property(nonatomic,strong) PopViewController *sortVC;
+
 @end
 
 
@@ -35,10 +41,14 @@ int cellsCount;
 bool downloadFlag;
 bool downloadingError;
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.dataArray = [[NSArray alloc]init];
+    [self initElements];
+}
+
+-(void)initElements
+{
     AppDelegate* delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     self.context = delegate.managedObjectContext;
     self.provider=[[Provider alloc]initWithContext:delegate.managedObjectContext];
@@ -48,6 +58,7 @@ bool downloadingError;
     self.movieEntity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
     self.noImage=[UIImage imageNamed:@"no_image.png"];
     self.sortingKey=@"popularity";
+    [self configurePopVC:self.sortVC withArray:[self.provider getSortingArray]];
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
@@ -55,41 +66,20 @@ bool downloadingError;
         exit(-1);  // Fail
     }
     [self downloadMoviesWithDeleting:true];
-   
+    [self.provider getGenresArray];
 }
-- (IBAction)GenreClick:(id)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"Pop"];
+- (IBAction)genreClick:(id)sender {
     
-    // present the controller
-    // on iPad, this will be a Popover
-    // on iPhone, this will be an action sheet
-    controller.modalPresentationStyle = UIModalPresentationPopover;
-    [self presentViewController:controller animated:YES completion:nil];
-    
-    // configure the Popover presentation controller
-    UIPopoverPresentationController *popController = [controller popoverPresentationController];
-    popController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-    popController.barButtonItem = self.genreButton;
-    popController.delegate = self;}
-- (IBAction)update:(id)sender {
-    
-    //DetailViewController *detailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
-    //[self.navigationController pushViewController:detailVC animated:YES];
-    
-    //[self presentViewController:detailVC animated:YES completion:nil];
-    
-    self.sortingKey=@"voteAverage";
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:self.sortingKey ascending:NO];
-    [[self.fetchedResultsController fetchRequest]setSortDescriptors:[NSArray arrayWithObject:sort]];
-    NSError *error;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        // Update to handle the error appropriately.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        exit(-1);  // Fail
+    //configure the Popover presentation controller
     }
-    [self.myTableView reloadData];
-    //[self.myTableView beginUpdates];
+
+- (IBAction)sortClick:(id)sender {
+    [self presentViewController:self.sortVC animated:YES completion:nil];
+    
+    /*UIPopoverPresentationController *popController = [self.sortVC popoverPresentationController];
+    popController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    popController.barButtonItem = self.sortButton;
+    popController.delegate = self;*/
 }
 
 //uicollectionview; flow layout=horizontal
@@ -202,6 +192,63 @@ bool downloadingError;
     }];
 }
 
+-(void)configurePopVC:(PopViewController *)popVC withArray:(NSArray *)arr
+{
+    //PopViewController *popVC1=[self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
+    //popVC1.dataArray=arr;
+    //popVC=[[PopViewController alloc]initWithArray:arr withBlock:
+    /*popVC.myBlock = ^()
+           {
+               if ([popVC.selectedGenre isEqualToString:@"Popularity"] || [popVC.selectedGenre isEqualToString:@"Top Rated"] ) {
+                   [self updateTableWithSorting:popVC.selectedGenre];
+               }
+           };*/
+    //popVC1.modalPresentationStyle = UIModalPresentationPopover;
+    //popVC=popVC1;
+    
+    self.sortVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
+    self.sortVC.dataArray=arr;
+    self.sortVC.myBlock=^()
+    {
+        if ([self.sortVC.selectedGenre isEqualToString:@"Popularity"]) {
+            [self updateTableWithSorting:@"popularity"];
+        }
+        else{
+            [self updateTableWithSorting:@"voteAverage"];
+        }
+    };
+    self.sortVC.modalPresentationStyle = UIModalPresentationPopover;
+}
+
+-(void)updateTableWithGenre:(NSString *)genre
+{
+    
+}
+
+-(void)updateTableWithSorting:(NSString *)sortName
+{
+    self.sortingKey=sortName;
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:self.sortingKey ascending:NO];
+    [[self.fetchedResultsController fetchRequest]setSortDescriptors:[NSArray arrayWithObject:sort]];
+    NSError *error;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        // Update to handle the error appropriately.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        exit(-1);  // Fail
+    }
+    [self.myTableView reloadData];
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 #pragma mark - Navigation
@@ -213,8 +260,21 @@ bool downloadingError;
 }
 */
 
-///////////////////////////////////////////////////////////////////////////////
-//FetchedResultConroller
+# pragma mark - Popover Presentation Controller Delegate
+
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController {
+    
+    // called when a Popover is dismissed
+    NSLog(@"Popover was dismissed with external tap. Have a nice day!");
+}
+- (BOOL)popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController {
+    
+    // return YES if the Popover should be dismissed
+    // return NO if the Popover should not be dismissed
+    return YES;
+}
+
+# pragma mark - FetchedResultConroller
 - (NSFetchedResultsController *)fetchedResultsController {
     
     if (_fetchedResultsController != nil) {
