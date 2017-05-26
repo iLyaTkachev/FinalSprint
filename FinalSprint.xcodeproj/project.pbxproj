@@ -14,6 +14,7 @@
 		090A7BCB1ED7A67D00708855 /* Genre+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC41ED7A67D00708855 /* Genre+CoreDataClass.m */; };
 		090A7BCC1ED7A67D00708855 /* Genre+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC61ED7A67D00708855 /* Genre+CoreDataProperties.m */; };
 		090A7BCF1ED82F0600708855 /* coreDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BCE1ED82F0600708855 /* coreDataProvider.m */; };
+		090A7BD21ED864C100708855 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BD11ED864C100708855 /* SearchViewController.m */; };
 		09265AE11EBB21EA00AC31CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09265AE01EBB21EA00AC31CD /* main.m */; };
 		09265AE41EBB21EA00AC31CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09265AE31EBB21EA00AC31CD /* AppDelegate.m */; };
 		09265AEA1EBB21EA00AC31CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09265AE81EBB21EA00AC31CD /* Main.storyboard */; };
@@ -57,6 +58,8 @@
 		090A7BC61ED7A67D00708855 /* Genre+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Genre+CoreDataProperties.m"; sourceTree = "<group>"; };
 		090A7BCD1ED82F0600708855 /* coreDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreDataProvider.h; sourceTree = "<group>"; };
 		090A7BCE1ED82F0600708855 /* coreDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = coreDataProvider.m; sourceTree = "<group>"; };
+		090A7BD01ED864C100708855 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		090A7BD11ED864C100708855 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		09265ADC1EBB21EA00AC31CD /* FinalSprint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalSprint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09265AE01EBB21EA00AC31CD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		09265AE21EBB21EA00AC31CD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -193,6 +196,8 @@
 				09603EFB1EC25A2400A02FB3 /* MovieViewController.m */,
 				098524B61ED24F0A00B15D92 /* DetailViewController.h */,
 				098524B71ED24F0A00B15D92 /* DetailViewController.m */,
+				090A7BD01ED864C100708855 /* SearchViewController.h */,
+				090A7BD11ED864C100708855 /* SearchViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -347,6 +352,7 @@
 				094B11DA1EC5C9A400B2E0EC /* MovieTableViewCell.m in Sources */,
 				099F56C41ED5D79F004C15FD /* JsonParser.m in Sources */,
 				090A7BCB1ED7A67D00708855 /* Genre+CoreDataClass.m in Sources */,
+				090A7BD21ED864C100708855 /* SearchViewController.m in Sources */,
 				090A7BC81ED7A67D00708855 /* Actor+CoreDataProperties.m in Sources */,
 				090A7BC71ED7A67D00708855 /* Actor+CoreDataClass.m in Sources */,
 				099F56D21ED600B5004C15FD /* PopTableViewCell.m in Sources */,

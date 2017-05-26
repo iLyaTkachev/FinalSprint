@@ -359,7 +359,6 @@
                         <outlet property="MovieName" destination="IGB-6q-QUd" id="brR-Cw-JGM"/>
                         <outlet property="movieName" destination="IGB-6q-QUd" id="Slc-dE-kIC"/>
                         <outlet property="objectTitle" destination="IGB-6q-QUd" id="edr-hg-Vxn"/>
-                        <outlet property="titleImage" destination="rjl-jv-ZB8" id="rus-iy-HEK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sEW-tx-jOb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -512,7 +511,7 @@
         <!--Search-->
         <scene sceneID="THc-ew-iII">
             <objects>
-                <viewController id="1YG-o4-1X6" sceneMemberID="viewController">
+                <viewController id="1YG-o4-1X6" customClass="SearchViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZNV-hj-B2m"/>
                         <viewControllerLayoutGuide type="bottom" id="ZCy-1a-MKn"/>
@@ -530,6 +529,9 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="vUR-d7-fdH">
                                 <rect key="frame" x="0.0" y="64" width="375" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="1YG-o4-1X6" id="xGk-19-DVR"/>
+                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tqK-zq-tb8">
                                 <rect key="frame" x="0.0" y="108" width="375" height="510"/>
@@ -544,6 +546,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="1YG-o4-1X6" id="Zx0-e4-hbp"/>
+                                    <outlet property="delegate" destination="1YG-o4-1X6" id="vkS-ev-KWv"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -562,6 +568,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="search-7.png" id="3lm-Wm-Kmf"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="searchBar" destination="vUR-d7-fdH" id="Rai-ce-2TA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kBL-7f-B1B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

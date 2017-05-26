@@ -133,8 +133,6 @@ bool downloadingError;
 {
     MovieTableViewCell *cell = (MovieTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"MovieCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
-    //NSLog(@"message from cellForRowAtIndexPath %d",indexPath.row);
-    //NSLog(@"offset === %f === %f",self.myTableView.contentOffset.y,(self.myTableView.contentSize.height - self.myTableView.frame.size.height*2));
     
     return cell;
 }
