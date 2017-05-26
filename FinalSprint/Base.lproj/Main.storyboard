@@ -62,6 +62,76 @@
             </objects>
             <point key="canvasLocation" x="482" y="-68"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="tTF-FL-ea5">
+            <objects>
+                <viewController storyboardIdentifier="detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0A9-tH-fL7" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xM3-wv-haK"/>
+                        <viewControllerLayoutGuide type="bottom" id="Byz-T0-V36"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="X07-z8-8Oo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hM1-oX-gIe">
+                                <rect key="frame" x="0.0" y="70" width="375" height="597"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hGM-6k-0KX">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="199.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="hGM-6k-0KX" secondAttribute="height" multiplier="15:8" id="WDZ-V8-CPT"/>
+                                        </constraints>
+                                    </imageView>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jNa-K9-ouR">
+                                        <rect key="frame" x="0.0" y="209.5" width="374" height="100"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="hTo-aH-jsH"/>
+                                        </constraints>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XyK-tD-bCp">
+                                            <size key="itemSize" width="50" height="50"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="HZx-VP-VLT">
+                                                <rect key="frame" x="0.0" y="25" width="50" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </view>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="jNa-K9-ouR" secondAttribute="bottom" constant="270" id="8IF-VL-zp5"/>
+                                    <constraint firstAttribute="trailing" secondItem="hGM-6k-0KX" secondAttribute="trailing" id="934-dp-iHR"/>
+                                    <constraint firstItem="jNa-K9-ouR" firstAttribute="leading" secondItem="hM1-oX-gIe" secondAttribute="leading" id="Cct-Pz-wJO"/>
+                                    <constraint firstAttribute="trailing" secondItem="jNa-K9-ouR" secondAttribute="trailing" id="FQV-pk-liD"/>
+                                    <constraint firstItem="jNa-K9-ouR" firstAttribute="top" secondItem="hGM-6k-0KX" secondAttribute="bottom" constant="10" id="N5j-5N-Vjr"/>
+                                    <constraint firstItem="hGM-6k-0KX" firstAttribute="centerX" secondItem="hM1-oX-gIe" secondAttribute="centerX" id="QGc-d2-Ezc"/>
+                                    <constraint firstItem="hGM-6k-0KX" firstAttribute="top" secondItem="hM1-oX-gIe" secondAttribute="top" id="ZcZ-c0-yrw"/>
+                                    <constraint firstItem="hGM-6k-0KX" firstAttribute="leading" secondItem="hM1-oX-gIe" secondAttribute="leading" id="xs8-KH-yVQ"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hM1-oX-gIe" secondAttribute="trailing" id="Hvj-d5-uTf"/>
+                            <constraint firstItem="Byz-T0-V36" firstAttribute="top" secondItem="hM1-oX-gIe" secondAttribute="bottom" id="IA2-sl-eW1"/>
+                            <constraint firstItem="hM1-oX-gIe" firstAttribute="top" secondItem="xM3-wv-haK" secondAttribute="bottom" constant="50" id="qS4-Ew-lx7"/>
+                            <constraint firstItem="hM1-oX-gIe" firstAttribute="leading" secondItem="X07-z8-8Oo" secondAttribute="leading" id="yDE-nR-OuE"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qAX-py-VST" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1313" y="296"/>
+        </scene>
         <!--Movie-->
         <scene sceneID="dP2-wL-pjq">
             <objects>
@@ -285,6 +355,12 @@
                             <constraint firstItem="IGB-6q-QUd" firstAttribute="top" secondItem="Z6b-Vm-5Y6" secondAttribute="bottom" id="rOh-eg-hVw"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="MovieName" destination="IGB-6q-QUd" id="brR-Cw-JGM"/>
+                        <outlet property="movieName" destination="IGB-6q-QUd" id="Slc-dE-kIC"/>
+                        <outlet property="objectTitle" destination="IGB-6q-QUd" id="edr-hg-Vxn"/>
+                        <outlet property="titleImage" destination="rjl-jv-ZB8" id="rus-iy-HEK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sEW-tx-jOb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

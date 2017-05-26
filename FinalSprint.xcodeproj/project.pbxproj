@@ -13,6 +13,7 @@
 		090A7BCA1ED7A67D00708855 /* Movie+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC21ED7A67D00708855 /* Movie+CoreDataProperties.m */; };
 		090A7BCB1ED7A67D00708855 /* Genre+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC41ED7A67D00708855 /* Genre+CoreDataClass.m */; };
 		090A7BCC1ED7A67D00708855 /* Genre+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC61ED7A67D00708855 /* Genre+CoreDataProperties.m */; };
+		090A7BCF1ED82F0600708855 /* coreDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BCE1ED82F0600708855 /* coreDataProvider.m */; };
 		09265AE11EBB21EA00AC31CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09265AE01EBB21EA00AC31CD /* main.m */; };
 		09265AE41EBB21EA00AC31CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09265AE31EBB21EA00AC31CD /* AppDelegate.m */; };
 		09265AEA1EBB21EA00AC31CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09265AE81EBB21EA00AC31CD /* Main.storyboard */; };
@@ -54,6 +55,8 @@
 		090A7BC41ED7A67D00708855 /* Genre+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Genre+CoreDataClass.m"; sourceTree = "<group>"; };
 		090A7BC51ED7A67D00708855 /* Genre+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Genre+CoreDataProperties.h"; sourceTree = "<group>"; };
 		090A7BC61ED7A67D00708855 /* Genre+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Genre+CoreDataProperties.m"; sourceTree = "<group>"; };
+		090A7BCD1ED82F0600708855 /* coreDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreDataProvider.h; sourceTree = "<group>"; };
+		090A7BCE1ED82F0600708855 /* coreDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = coreDataProvider.m; sourceTree = "<group>"; };
 		09265ADC1EBB21EA00AC31CD /* FinalSprint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalSprint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09265AE01EBB21EA00AC31CD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		09265AE21EBB21EA00AC31CD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -155,8 +158,6 @@
 		094B11D01EC4D08D00B2E0EC /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				099F56CB1ED6000D004C15FD /* Table Cells */,
-				099F56CA1ED5FFE8004C15FD /* TableCells */,
 				0966F7621ECA3DA500DC248F /* URLConnection.h */,
 				0966F7631ECA3DA500DC248F /* URLConnection.m */,
 			);
@@ -202,6 +203,8 @@
 				099F56C11ED5D770004C15FD /* JSON_Parser */,
 				0966F7661ECA3DFD00DC248F /* Provider.h */,
 				0966F7671ECA3DFD00DC248F /* Provider.m */,
+				090A7BCD1ED82F0600708855 /* coreDataProvider.h */,
+				090A7BCE1ED82F0600708855 /* coreDataProvider.m */,
 			);
 			name = Provider;
 			sourceTree = "<group>";
@@ -241,20 +244,6 @@
 				099F56C31ED5D79F004C15FD /* JsonParser.m */,
 			);
 			name = JSON_Parser;
-			sourceTree = "<group>";
-		};
-		099F56CA1ED5FFE8004C15FD /* TableCells */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = TableCells;
-			sourceTree = "<group>";
-		};
-		099F56CB1ED6000D004C15FD /* Table Cells */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Table Cells";
 			sourceTree = "<group>";
 		};
 		099F56CC1ED6002B004C15FD /* Table Cells */ = {
@@ -367,6 +356,7 @@
 				090A7BCC1ED7A67D00708855 /* Genre+CoreDataProperties.m in Sources */,
 				098524B81ED24F0A00B15D92 /* DetailViewController.m in Sources */,
 				0966F7641ECA3DA500DC248F /* URLConnection.m in Sources */,
+				090A7BCF1ED82F0600708855 /* coreDataProvider.m in Sources */,
 				09265AE11EBB21EA00AC31CD /* main.m in Sources */,
 				09603EFC1EC25A2400A02FB3 /* MovieViewController.m in Sources */,
 			);

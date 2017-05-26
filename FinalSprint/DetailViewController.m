@@ -9,6 +9,8 @@
 #import "DetailViewController.h"
 
 @interface DetailViewController ()
+@property (strong, nonatomic) IBOutlet UILabel *objectTitle;
+@property (strong, nonatomic) IBOutlet UIImageView *titleImage;
 
 @end
 
@@ -30,6 +32,11 @@
     
 }
 
+-(void)configureVCwithObject:(NSObject *)object withObjectType:(NSString *)type{
+    if ([type isEqualToString:@"Movie"]) {
+        
+    }
+}
 /*
 #pragma mark - Navigation
 

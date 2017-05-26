@@ -202,9 +202,10 @@ bool downloadingError;
     cell.tag = indexPath.row;
     Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.title.text = movie.title;
+    NSArray *genreArr = [movie.genres allObjects];
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
     NSString *path=[NSString stringWithFormat: @"%@%@", moviePosterImagesDB, movie.posterPath];
-    /*[self.provider downloadImageWithUrl:path withBlock:^(UIImage *img,NSError *error)
+    [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img,NSError *error)
     {
         if (error==nil) {
             if (cell.tag == indexPath.row) {
@@ -215,7 +216,7 @@ bool downloadingError;
         else{
             NSLog(@"%@",error.description);
         }
-    }];*/
+    }];
 }
 
 -(void)updateTableWithSorting:(NSString *)sortName

@@ -32,6 +32,7 @@
         imgDict = [[NSMutableDictionary alloc]init];
         self.parser=[[JsonParser alloc]init];
         self.genreDict=[self getGenresDictionary];
+        //[self updateGenresInContext];
     }
     return self;
 }
@@ -47,6 +48,7 @@
              __block NSArray *objArray=[[NSArray alloc]init];
              [self serializeObjectsFromData:data myBlock:^(NSArray *array,NSError *serializeError)
               {
+                  //NSArray *objArray=[[NSArray alloc]init];
                   if (serializeError==nil) {
                       if ([entity.name isEqualToString:@"Movie"]){
                           objArray=[array valueForKey:@"results"];
@@ -98,7 +100,7 @@
         {
             for (NSDictionary *jsonObject in array) {
                 Movie *newItem=[[Movie alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
-                [self.parser newMovie:newItem from:jsonObject withGenreDict:self.genreDict];
+                [self.parser newMovie:newItem from:jsonObject withGenreDict:self.genreDict withContext:self.privateContext];
             }
         }
         else if([entity1.name isEqualToString:@"Genre"])
@@ -258,7 +260,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Genre" inManagedObjectContext:self.context];
     NSFetchRequest *fetch = [[NSFetchRequest alloc] init];
     [fetch setEntity:entity];
-    NSArray * result = [self.context executeFetchRequest:fetch error:nil];
+    NSArray *result = [self.context executeFetchRequest:fetch error:nil];
     NSMutableDictionary *dict=[NSMutableDictionary dictionary];
     for (NSDictionary *item in result)
     {
@@ -268,9 +270,10 @@
 }
 
 -(void)updateGenresInContext{
-    NSString *url=[NSString stringWithFormat: @"%@%@&%@",movieGenres,apiV3Key,lang];
+    NSString *url=[NSString stringWithFormat: @"https://api.themoviedb.org/3/genre/movie/list?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US"];
+                   //movieGenres,apiV3Key,lang];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Genre" inManagedObjectContext:self.context];
-    [self updateContextWithEntity:entity withUrl:url withDeleting:NO withBlock:^(NSError *error)
+    [self updateContextWithEntity:entity withUrl:url withDeleting:YES withBlock:^(NSError *error)
      {
          if (error!=nil) {
              NSLog(@"%@",error.description);
