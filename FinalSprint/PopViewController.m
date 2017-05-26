@@ -53,16 +53,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PopTableViewCell *cell = (PopTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    
-    cell.genre.text=[dataArray objectAtIndex:indexPath.row];
+    NSString *text = [dataArray objectAtIndex:indexPath.row];
+    cell.genre.text = text;
+    if ([text isEqualToString:self.selectedItem]) {
+        cell.genre.textColor=[UIColor blueColor];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedGenre=[self.dataArray objectAtIndex:indexPath.row];
-    self.myBlock();
+    self.selectedItem=[self.dataArray objectAtIndex:indexPath.row];
+    self.myBlock(self.selectedItem);
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)hideControllerButtonPressed:(UIBarButtonItem *)sender {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

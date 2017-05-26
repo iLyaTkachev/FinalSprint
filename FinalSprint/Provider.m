@@ -9,7 +9,14 @@
 #import "Provider.h"
 #import "URLConnection.h"
 #import "Movie+CoreDataClass.h"
+#import "Genre+CoreDataClass.h"
 #import "Constants.h"
+
+@interface Provider()
+@property (nonatomic,strong) NSMutableDictionary *imageDict;
+@property (nonatomic,strong) JsonParser *parser;
+@property (nonatomic,strong) NSDictionary *genreDict;
+@end
 
 @implementation Provider
 @synthesize imageDict=imgDict;
@@ -24,11 +31,12 @@
         [self.privateContext setParentContext:self.context];
         imgDict = [[NSMutableDictionary alloc]init];
         self.parser=[[JsonParser alloc]init];
+        self.genreDict=[self getGenresDictionary];
     }
     return self;
 }
 
--(void)getObjectsFromURL:(NSString *)urlAdress withBlock: (void(^)(NSArray *, NSError *)) block
+-(void)getObjectsFromURL:(NSString *)urlAdress forEntity:(NSEntityDescription *)entity withBlock: (void(^)(NSArray *, NSError *)) block
 {
     NSURL *url = [NSURL URLWithString:urlAdress];
     URLConnection *con=[[URLConnection alloc]init];
@@ -40,8 +48,12 @@
              [self serializeObjectsFromData:data myBlock:^(NSArray *array,NSError *serializeError)
               {
                   if (serializeError==nil) {
-                      objArray=[array valueForKey:@"results"];
-                      //objArray=[array valueForKey:@"genres"];
+                      if ([entity.name isEqualToString:@"Movie"]){
+                          objArray=[array valueForKey:@"results"];
+                      }
+                      else if ([entity.name isEqualToString:@"Genre"]){
+                          objArray=[array valueForKey:@"genres"];
+                      }
                       block(objArray,nil);
                   }
                   //[self updateContextWithObjects:objArray withBlock:block ];
@@ -85,8 +97,8 @@
         if ([entity1.name isEqualToString:@"Movie"])
         {
             for (NSDictionary *jsonObject in array) {
-                NSManagedObject *newItem=[[NSManagedObject alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
-                [self.parser newMovie:newItem from:jsonObject];
+                Movie *newItem=[[Movie alloc]initWithEntity:entity insertIntoManagedObjectContext:self.privateContext];
+                [self.parser newMovie:newItem from:jsonObject withGenreDict:self.genreDict];
             }
         }
         else if([entity1.name isEqualToString:@"Genre"])
@@ -115,10 +127,10 @@
 
 }
 
--(void)updateTableWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block
+-(void)updateContextWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block
 {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        [self getObjectsFromURL:url withBlock:^(NSArray *array,NSError *error)
+        [self getObjectsFromURL:url forEntity:entity withBlock:^(NSArray *array,NSError *error)
          {
              if (error==nil) {
                  if (mode)//if true-delete objects
@@ -174,9 +186,9 @@
         NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
         [fetch setEntity:entityDel];
         NSArray * result = [moc executeFetchRequest:fetch error:nil];
-        for (NSManagedObject *movie in result)
+        for (NSManagedObject *item in result)
         {
-            [moc deleteObject:movie];
+            [moc deleteObject:item];
         }
         NSError *error = nil;
         if (![moc save:&error]) {
@@ -235,30 +247,34 @@
     });
 }
 
--(NSArray *)getSortingArray{
-    NSMutableArray *arr=[[NSMutableArray alloc]init];
-    [arr addObject:@"Popularity"];
-    [arr addObject:@"Top Rated"];
-    return arr;
+-(NSDictionary *)getSortingDictionary{
+    NSMutableDictionary *dict=[NSMutableDictionary dictionary];
+    [dict setValue:@"Popularity" forKey:@"popularity"];
+    [dict setValue:@"Top Rated" forKey:@"voteAverage"];
+    return dict;
 }
 
--(void)getGenresArray{
+-(NSDictionary *)getGenresDictionary {
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Genre" inManagedObjectContext:self.context];
+    NSFetchRequest *fetch = [[NSFetchRequest alloc] init];
+    [fetch setEntity:entity];
+    NSArray * result = [self.context executeFetchRequest:fetch error:nil];
+    NSMutableDictionary *dict=[NSMutableDictionary dictionary];
+    for (NSDictionary *item in result)
+    {
+        [dict setValue:[item valueForKey:@"name"] forKey:[item valueForKey:@"genreID"]];
+    }
+    return dict;
+}
+
+-(void)updateGenresInContext{
     NSString *url=[NSString stringWithFormat: @"%@%@&%@",movieGenres,apiV3Key,lang];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Genre" inManagedObjectContext:self.context];
-    [self updateTableWithEntity:entity withUrl:url withDeleting:NO withBlock:^(NSError *error)
+    [self updateContextWithEntity:entity withUrl:url withDeleting:NO withBlock:^(NSError *error)
      {
          if (error!=nil) {
              NSLog(@"%@",error.description);
          }
      }];
-    
-    NSFetchRequest *fetch = [[NSFetchRequest alloc] init];
-    [fetch setEntity:entity];
-    NSArray * result = [self.context executeFetchRequest:fetch error:nil];
-    for (NSDictionary *movie in result)
-    {
-        NSLog(@"%@",[movie valueForKey:@"name"]);
-    }
-
 }
 @end

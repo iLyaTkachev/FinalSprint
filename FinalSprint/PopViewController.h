@@ -11,7 +11,7 @@
 @interface PopViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (strong, nonatomic) NSArray *dataArray;
-@property (strong, nonatomic) NSString *selectedGenre;
+@property (strong, nonatomic) NSString *selectedItem;
 @property(nonatomic, copy) void(^myBlock)();
 
 -(id)initWithArray:(NSArray *)array withBlock:(void(^)()) block;

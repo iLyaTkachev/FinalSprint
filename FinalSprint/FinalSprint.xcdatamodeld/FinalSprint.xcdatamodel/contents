@@ -4,7 +4,7 @@
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="profilePath" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="movies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="actors" inverseEntity="Movie" syncable="YES"/>
+        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Movie" inverseName="actors" inverseEntity="Movie" syncable="YES"/>
     </entity>
     <entity name="Genre" representedClassName="Genre" syncable="YES" codeGenerationType="class">
         <attribute name="genreID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES">
@@ -16,7 +16,7 @@
         <attribute name="movieGenre" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tvGenre" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="movies" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="genres" inverseEntity="Movie" syncable="YES"/>
+        <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Movie" inverseName="genres" inverseEntity="Movie" syncable="YES"/>
     </entity>
     <entity name="Movie" representedClassName="Movie" syncable="YES" codeGenerationType="class">
         <attribute name="backdropPath" optional="YES" attributeType="String" syncable="YES"/>
@@ -30,11 +30,11 @@
         <attribute name="voteAverage" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="voteCount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="actors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Actor" inverseName="movies" inverseEntity="Actor" syncable="YES"/>
-        <relationship name="genres" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Genre" inverseName="movies" inverseEntity="Genre" syncable="YES"/>
+        <relationship name="genres" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Genre" inverseName="movies" inverseEntity="Genre" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Actor" positionX="-54" positionY="63" width="128" height="103"/>
-        <element name="Movie" positionX="-63" positionY="-18" width="128" height="223"/>
+        <element name="Actor" positionX="-54" positionY="63" width="128" height="105"/>
         <element name="Genre" positionX="-54" positionY="63" width="128" height="120"/>
+        <element name="Movie" positionX="-63" positionY="-18" width="128" height="225"/>
     </elements>
 </model>

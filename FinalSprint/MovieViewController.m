@@ -20,15 +20,13 @@
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) Provider *provider;
-//@property (nonatomic,strong) NSArray *dataArray;
 @property(nonatomic,strong) NSEntityDescription *movieEntity;
 @property(nonatomic,strong) UIImage *noImage;
 @property(nonatomic,strong) NSString *sortingKey;
 @property(nonatomic,strong) NSString *genreKey;
+@property(nonatomic,strong) NSDictionary *genreDictionary;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *genreButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortButton;
-@property(nonatomic,strong) PopViewController *genreVC;
-@property(nonatomic,strong) PopViewController *sortVC;
 
 @end
 
@@ -51,35 +49,53 @@ bool downloadingError;
 {
     AppDelegate* delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     self.context = delegate.managedObjectContext;
-    self.provider=[[Provider alloc]initWithContext:delegate.managedObjectContext];
-    pageCount=1;
-    downloadFlag=true;
-    downloadingError=false;
+    self.provider = [[Provider alloc]initWithContext:delegate.managedObjectContext];
+    pageCount = 1;
+    downloadFlag = true;
+    downloadingError = false;
     self.movieEntity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
-    self.noImage=[UIImage imageNamed:@"no_image.png"];
-    self.sortingKey=@"popularity";
-    [self configurePopVC:self.sortVC withArray:[self.provider getSortingArray]];
+    self.noImage = [UIImage imageNamed:@"no_image.png"];
+    self.sortingKey = @"popularity";
+    self.genreKey = @"All";
+    self.genreDictionary = [self.provider getGenresDictionary];
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        exit(-1);  // Fail
     }
     [self downloadMoviesWithDeleting:true];
-    //[self.provider getGenresArray];
 }
 - (IBAction)genreClick:(id)sender {
-    
-    //configure the Popover presentation controller
-    }
+    PopViewController *genreVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
+    genreVC.selectedItem = self.genreKey;
+    NSMutableArray *arr = [NSMutableArray arrayWithObject:@"All"];
+    [arr addObjectsFromArray:self.genreDictionary.allValues];
+    genreVC.dataArray = arr;
+    genreVC.myBlock=^(NSString *selectedItem)
+    {
+        self.genreKey=selectedItem;
+    };
+    //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
+    [self presentViewController:genreVC animated:YES completion:nil];
+}
 
 - (IBAction)sortClick:(id)sender {
-    [self presentViewController:self.sortVC animated:YES completion:nil];
-    
-    /*UIPopoverPresentationController *popController = [self.sortVC popoverPresentationController];
-    popController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-    popController.barButtonItem = self.sortButton;
-    popController.delegate = self;*/
+    PopViewController *sortVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
+    NSDictionary *dict=[self.provider getSortingDictionary];
+    sortVC.selectedItem = [dict valueForKey:self.sortingKey];
+    sortVC.dataArray = [dict allValues];
+    sortVC.myBlock=^(NSString *selectedItem)
+    {
+        if ([selectedItem isEqualToString:@"Popularity"]) {
+            self.sortingKey=@"popularity";
+        }
+        else{
+            self.sortingKey=@"voteAverage";
+        }
+        [self updateTableWithSorting:self.sortingKey];
+    };
+    //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
+    [self presentViewController:sortVC animated:YES completion:nil];
 }
 
 //uicollectionview; flow layout=horizontal
@@ -143,24 +159,24 @@ bool downloadingError;
 
 -(void)downloadMoviesWithDeleting:(bool)mode
 {
+    downloadFlag = false;
     downloadFlag=false;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-    NSString *url=[NSString stringWithFormat: @"%@%@&%@&%@=%d",moviesPopular,apiV3Key,lang,page,pageCount];
-    [self.provider updateTableWithEntity:self.movieEntity withUrl:url withDeleting:mode withBlock:^(NSError *error)
-     {
-         if (error==nil) {
-             downloadingError=false;
-             [self.activityIndicator stopAnimating];
-             pageCount++;
-         }
-         else{
-             NSLog(@"Updating error: %@",error.description);
-             [self.activityIndicator stopAnimating];
-             downloadingError=true;
-             pageCount=oldPageCount;
-         }
-         downloadFlag=true;
-     }];
+        NSString *url=[NSString stringWithFormat: @"%@%@&%@&%@=%d",moviesPopular,apiV3Key,lang,page,pageCount];
+        [self.provider updateContextWithEntity:self.movieEntity withUrl:url withDeleting:mode withBlock:^(NSError *error)
+         {
+             if (error==nil) {
+                 downloadingError=false;
+                 [self.activityIndicator stopAnimating];
+                 pageCount++;
+             } else {
+                 NSLog(@"Updating error: %@",error.description);
+                 [self.activityIndicator stopAnimating];
+                 downloadingError=true;
+                 pageCount=oldPageCount;
+             }
+             downloadFlag=true;
+         }];
     });
 }
 
@@ -187,42 +203,9 @@ bool downloadingError;
             }
         }
         else{
-            
+            NSLog(@"%@",error.description);
         }
     }];
-}
-
--(void)configurePopVC:(PopViewController *)popVC withArray:(NSArray *)arr
-{
-    //PopViewController *popVC1=[self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
-    //popVC1.dataArray=arr;
-    //popVC=[[PopViewController alloc]initWithArray:arr withBlock:
-    /*popVC.myBlock = ^()
-           {
-               if ([popVC.selectedGenre isEqualToString:@"Popularity"] || [popVC.selectedGenre isEqualToString:@"Top Rated"] ) {
-                   [self updateTableWithSorting:popVC.selectedGenre];
-               }
-           };*/
-    //popVC1.modalPresentationStyle = UIModalPresentationPopover;
-    //popVC=popVC1;
-    
-    self.sortVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
-    self.sortVC.dataArray=arr;
-    self.sortVC.myBlock=^()
-    {
-        if ([self.sortVC.selectedGenre isEqualToString:@"Popularity"]) {
-            [self updateTableWithSorting:@"popularity"];
-        }
-        else{
-            [self updateTableWithSorting:@"voteAverage"];
-        }
-    };
-    self.sortVC.modalPresentationStyle = UIModalPresentationPopover;
-}
-
--(void)updateTableWithGenre:(NSString *)genre
-{
-    
 }
 
 -(void)updateTableWithSorting:(NSString *)sortName
@@ -234,10 +217,23 @@ bool downloadingError;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        exit(-1);  // Fail
     }
     [self.myTableView reloadData];
 }
+
+-(void)updateTableWithGenre:(NSString *)genreName
+{
+    self.genreKey=genreName;
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:genreName ascending:NO];
+    [[self.fetchedResultsController fetchRequest]setSortDescriptors:[NSArray arrayWithObject:sort]];
+    NSError *error;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        // Update to handle the error appropriately.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    }
+    [self.myTableView reloadData];
+}
+
 
 
 

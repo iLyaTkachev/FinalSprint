@@ -7,15 +7,22 @@
 //
 
 #import "JsonParser.h"
+#import "Movie+CoreDataProperties.h"
 
 @implementation JsonParser
 
--(void)newMovie:(NSObject *)newObject from:(NSDictionary *)jsonObject
+-(void)newMovie:(Movie *)newObject from:(NSDictionary *)jsonObject withGenreDict:(NSDictionary *)dict
 {
+    
     [newObject setValue:[jsonObject objectForKey:@"poster_path"] forKey:@"posterPath"];
     [newObject setValue:[jsonObject objectForKey:@"overview"] forKey:@"overview"];
     [newObject setValue:[jsonObject objectForKey:@"release_date"] forKey:@"releaseDate"];
+    NSArray *genreArr=[jsonObject objectForKey:@"genre_ids"];
+    for (int i=0; i<genreArr.count; i++) {
+        
+    }
     //([newMovie setValue:[jsonObject objectForKey:@"genre_ids"]) forKey:@"releaseDate"];
+
     
     [newObject setValue:[jsonObject objectForKey:@"title"] forKey:@"title"];
     [newObject setValue:[jsonObject objectForKey:@"popularity"] forKey:@"popularity"];

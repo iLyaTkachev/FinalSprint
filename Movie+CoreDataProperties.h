@@ -2,7 +2,7 @@
 //  Movie+CoreDataProperties.h
 //  FinalSprint
 //
-//  Created by iLya Tkachev on 5/25/17.
+//  Created by iLya Tkachev on 5/26/17.
 //  Copyright © 2017 iLya Tkachev. All rights reserved.
 //
 
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) float voteAverage;
 @property (nonatomic) int32_t voteCount;
 @property (nullable, nonatomic, retain) NSSet<Actor *> *actors;
-@property (nullable, nonatomic, retain) Genre *genres;
+@property (nullable, nonatomic, retain) NSSet<Genre *> *genres;
 
 @end
 
@@ -36,6 +36,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeActorsObject:(Actor *)value;
 - (void)addActors:(NSSet<Actor *> *)values;
 - (void)removeActors:(NSSet<Actor *> *)values;
+
+- (void)addGenresObject:(Genre *)value;
+- (void)removeGenresObject:(Genre *)value;
+- (void)addGenres:(NSSet<Genre *> *)values;
+- (void)removeGenres:(NSSet<Genre *> *)values;
 
 @end
 

@@ -491,7 +491,7 @@
             </objects>
             <point key="canvasLocation" x="-553" y="519"/>
         </scene>
-        <!--Pop View Controller-->
+        <!--Title-->
         <scene sceneID="2D1-Od-yA3">
             <objects>
                 <viewController storyboardIdentifier="Pop" useStoryboardIdentifierAsRestorationIdentifier="YES" id="KXd-DV-LM5" customClass="PopViewController" sceneMemberID="viewController">
@@ -511,7 +511,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kjF-gM-AhJ" id="5ao-UZ-fyd">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="genre" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uak-bf-iYr">
@@ -547,6 +547,14 @@
                             <constraint firstAttribute="trailing" secondItem="bKx-Wp-bPd" secondAttribute="trailing" id="pP6-eF-f3X"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="D3f-ra-drO">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="RIU-cb-8bR">
+                            <connections>
+                                <action selector="hideControllerButtonPressed:" destination="KXd-DV-LM5" id="h9p-Rl-tim"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="myTableView" destination="bKx-Wp-bPd" id="Uj6-yO-PZV"/>
                     </connections>

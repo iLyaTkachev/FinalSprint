@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "-serializeObjectsFromData:myBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "-serializeObjectsFromData:myBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -120,11 +120,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517396648.378816"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "-didReceiveMemoryWarning"
             landmarkType = "7">
          </BreakpointContent>
@@ -136,11 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "-updateContextWithObjects:withEntity:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -152,12 +152,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "-updateTableWithEntity:withUrl:withDeleting:withBlock:"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
+            landmarkName = "-updateContextWithEntity:withUrl:withDeleting:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -168,12 +168,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "-updateTableWithEntity:withUrl:withDeleting:withBlock:"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "-updateContextWithEntity:withUrl:withDeleting:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -184,12 +184,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
-            landmarkName = "-updateTableWithEntity:withUrl:withDeleting:withBlock:"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "-updateContextWithEntity:withUrl:withDeleting:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -200,11 +200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "-deleteObjectsWithEntity:withContext:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -216,11 +216,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "-deleteObjectsWithEntity:withContext:withBlock:"
             landmarkType = "7">
             <Locations>
@@ -264,11 +264,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
             landmarkName = "-deleteObjectsWithEntity:withContext:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -280,11 +280,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517396648.378816"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "-scrollViewDidScroll:"
             landmarkType = "7">
          </BreakpointContent>
@@ -296,11 +296,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517396648.378816"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "-scrollViewDidScroll:"
             landmarkType = "7">
          </BreakpointContent>
@@ -312,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "-deleteObjectsWithEntity:withContext:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -328,12 +328,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "-updateTableWithEntity:withUrl:withDeleting:withBlock:"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "-updateContextWithEntity:withUrl:withDeleting:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -344,12 +344,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "-updateTableWithEntity:withUrl:withDeleting:withBlock:"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "-updateContextWithEntity:withUrl:withDeleting:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -360,11 +360,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517396648.378816"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -376,11 +376,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517397391.963264"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "306"
-            endingLineNumber = "306"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
             landmarkName = "@implementation MovieViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -392,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517397391.963264"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "298"
-            endingLineNumber = "298"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
             landmarkName = "-fetchedResultsController"
             landmarkType = "7">
          </BreakpointContent>
@@ -408,11 +408,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517397391.963264"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
             landmarkName = "-controllerWillChangeContent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -424,11 +424,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517397391.963264"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
+            startingLineNumber = "298"
+            endingLineNumber = "298"
             landmarkName = "-controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -440,11 +440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517396648.378816"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
             landmarkName = "-scrollViewDidScroll:"
             landmarkType = "7">
          </BreakpointContent>
@@ -456,11 +456,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517396648.378816"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "7">
          </BreakpointContent>
@@ -472,11 +472,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517396648.378816"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
             landmarkName = "-configureCell:atIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -488,11 +488,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517397391.963264"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
             landmarkName = "-popoverPresentationControllerDidDismissPopover:"
             landmarkType = "7">
          </BreakpointContent>
@@ -504,11 +504,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517397391.963264"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
             landmarkName = "-fetchedResultsController"
             landmarkType = "7">
          </BreakpointContent>
@@ -520,44 +520,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517349541.367551"
+            timestampString = "517472658.2156"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "-genreClick:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517396648.378816"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "198"
-            endingLineNumber = "198"
-            landmarkName = "-configurePopVC:withArray:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FinalSprint/MovieViewController.m"
-            timestampString = "517397085.007006"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
-            landmarkName = "-configurePopVC:withArray:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -584,11 +552,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "-updateContextWithObjects:withEntity:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -600,11 +568,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "-updateContextWithObjects:withEntity:withBlock:"
             landmarkType = "7">
             <Locations>
@@ -648,11 +616,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FinalSprint/Provider.m"
-            timestampString = "517410141.080728"
+            timestampString = "517471270.11133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "-serializeObjectsFromData:myBlock:"
             landmarkType = "7">
          </BreakpointContent>
@@ -663,13 +631,189 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FinalSprint/Provider.m"
-            timestampString = "517411641.112978"
+            filePath = "FinalSprint/MovieViewController.m"
+            timestampString = "517473701.387276"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
-            landmarkName = "-getGenresArray"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "-sortClick:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/MovieViewController.m"
+            timestampString = "517473701.387276"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "-controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/MovieViewController.m"
+            timestampString = "517473701.387276"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "296"
+            endingLineNumber = "296"
+            landmarkName = "-controller:didChangeObject:atIndexPath:forChangeType:newIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/MovieViewController.m"
+            timestampString = "517473701.387276"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "-updateTableWithSorting:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/MovieViewController.m"
+            timestampString = "517473701.387276"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "-updateTableWithSorting:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/Provider.m"
+            timestampString = "517471270.11133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "-getObjectsFromURL:forEntity:withBlock:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/Provider.m"
+            timestampString = "517471270.11133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "-getObjectsFromURL:forEntity:withBlock:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/Provider.m"
+            timestampString = "517471270.11133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "-getObjectsFromURL:forEntity:withBlock:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/Provider.m"
+            timestampString = "517471270.11133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "-updateContextWithEntity:withUrl:withDeleting:withBlock:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/MovieViewController.m"
+            timestampString = "517471270.11133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "-initElements"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/JsonParser.m"
+            timestampString = "517471270.11133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "-newGenre:from:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FinalSprint/Provider.m"
+            timestampString = "517471270.11133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "-getObjectsFromURL:forEntity:withBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

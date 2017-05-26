@@ -13,13 +13,11 @@
 @interface Provider : NSObject
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) NSManagedObjectContext *privateContext;
-@property (nonatomic,strong) NSMutableDictionary *imageDict;
-@property (nonatomic,strong) JsonParser *parser;
 
 -(id)initWithContext:(NSManagedObjectContext *)context;
--(void)updateTableWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block;
+-(void)updateContextWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block;
 -(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *,NSError *)) block;
--(NSArray *)getSortingArray;
--(void)getGenresArray;
+-(NSDictionary *)getSortingDictionary;
+-(NSDictionary *)getGenresDictionary;
 
 @end
