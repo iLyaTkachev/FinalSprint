@@ -10,4 +10,6 @@
 
 @interface DetailViewController : UIViewController
 
+-(void)configureVCwithObject:(NSObject *)object withObjectType:(NSString *)type;
+
 @end

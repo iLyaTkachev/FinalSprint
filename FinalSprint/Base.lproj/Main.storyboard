@@ -356,8 +356,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="MovieName" destination="IGB-6q-QUd" id="brR-Cw-JGM"/>
-                        <outlet property="movieName" destination="IGB-6q-QUd" id="Slc-dE-kIC"/>
                         <outlet property="objectTitle" destination="IGB-6q-QUd" id="edr-hg-Vxn"/>
                     </connections>
                 </viewController>

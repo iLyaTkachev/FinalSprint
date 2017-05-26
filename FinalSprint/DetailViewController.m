@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "Movie+CoreDataProperties.h"
 
 @interface DetailViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *objectTitle;
@@ -33,6 +34,7 @@
 
 -(void)configureVCwithObject:(NSObject *)object withObjectType:(NSString *)type{
     if ([type isEqualToString:@"Movie"]) {
+        self.objectTitle.text=[object valueForKey:@"title"];
         
     }
 }

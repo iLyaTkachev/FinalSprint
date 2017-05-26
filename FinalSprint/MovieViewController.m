@@ -29,7 +29,6 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *genreButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortButton;
 
-
 @end
 
 
@@ -110,15 +109,13 @@ bool downloadingError;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Create a view controller with the title as its
-    // navigation title and push it.
     NSUInteger row = indexPath.row;
     if (row != NSNotFound)
     {
-        // Create the view controller and initialize it with the
-        // next level of data.
         DetailViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
+        NSObject *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [self presentViewController:viewController animated:YES completion:nil];
+        [viewController configureVCwithObject:movie withObjectType:@"Movie"];
     }
 }
 
