@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Movie+CoreDataClass.h"
 
 @interface JsonParser : NSObject
 
--(void)newMovie:(NSObject *)newObject from:(NSDictionary *)jsonObject withGenreDict:(NSDictionary *)dict;
+-(void)newMovie:(Movie *)newObject from:(NSDictionary *)jsonObject withGenreDict:(NSDictionary *)dict withContext:(NSManagedObjectContext *)context;
 -(void)newGenre:(NSObject *)newObject from:(NSDictionary *)jsonObject;
 
 @end

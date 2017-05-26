@@ -21,12 +21,14 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) Provider *provider;
 @property(nonatomic,strong) NSEntityDescription *movieEntity;
+@property(nonatomic,strong) NSString *movieUrl;
 @property(nonatomic,strong) UIImage *noImage;
 @property(nonatomic,strong) NSString *sortingKey;
 @property(nonatomic,strong) NSString *genreKey;
 @property(nonatomic,strong) NSDictionary *genreDictionary;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *genreButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortButton;
+
 
 @end
 
@@ -51,6 +53,7 @@ bool downloadingError;
     self.context = delegate.managedObjectContext;
     self.provider = [[Provider alloc]initWithContext:delegate.managedObjectContext];
     pageCount = 1;
+    self.movieUrl = [NSString stringWithFormat: @"%@%@&%@&%@",moviesPopular,apiV3Key,lang,page];
     downloadFlag = true;
     downloadingError = false;
     self.movieEntity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
@@ -63,7 +66,7 @@ bool downloadingError;
         // Update to handle the error appropriately.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
-    [self downloadMoviesWithDeleting:true];
+    [self downloadMoviesWithDeleting:true withTableReloading:false];
 }
 - (IBAction)genreClick:(id)sender {
     PopViewController *genreVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
@@ -86,13 +89,17 @@ bool downloadingError;
     sortVC.dataArray = [dict allValues];
     sortVC.myBlock=^(NSString *selectedItem)
     {
+        pageCount=1;
         if ([selectedItem isEqualToString:@"Popularity"]) {
             self.sortingKey=@"popularity";
+            self.movieUrl = [NSString stringWithFormat: @"%@%@&%@&%@",moviesPopular,apiV3Key,lang,page];
         }
         else{
             self.sortingKey=@"voteAverage";
+            self.movieUrl = [NSString stringWithFormat: @"%@%@&%@&%@",moviesTopRated,apiV3Key,lang,page];
         }
         [self updateTableWithSorting:self.sortingKey];
+        [self downloadMoviesWithDeleting:YES withTableReloading:true];
     };
     //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
     [self presentViewController:sortVC animated:YES completion:nil];
@@ -111,7 +118,7 @@ bool downloadingError;
         // Create the view controller and initialize it with the
         // next level of data.
         DetailViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailVC"];
-        [[self navigationController] pushViewController:viewController animated:YES];
+        [self presentViewController:viewController animated:YES completion:nil];
     }
 }
 
@@ -140,7 +147,7 @@ bool downloadingError;
             {
                 NSLog(@"downloading");
                 [self.activityIndicator startAnimating];
-                [self downloadMoviesWithDeleting:false];
+                [self downloadMoviesWithDeleting:false withTableReloading:false];
             }
     }
     else if(self.myTableView.contentOffset.y<-120)
@@ -151,18 +158,18 @@ bool downloadingError;
                 [self.activityIndicator startAnimating];
                 oldPageCount=pageCount;
                 pageCount=1;
-                [self downloadMoviesWithDeleting:true];
+                [self downloadMoviesWithDeleting:true withTableReloading:false];
             }
     }
 
 }
 
--(void)downloadMoviesWithDeleting:(bool)mode
+-(void)downloadMoviesWithDeleting:(bool)mode withTableReloading:(bool)reload
 {
     downloadFlag = false;
     downloadFlag=false;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        NSString *url=[NSString stringWithFormat: @"%@%@&%@&%@=%d",moviesPopular,apiV3Key,lang,page,pageCount];
+        NSString *url=[NSString stringWithFormat: @"%@=%d",self.movieUrl,pageCount];
         [self.provider updateContextWithEntity:self.movieEntity withUrl:url withDeleting:mode withBlock:^(NSError *error)
          {
              if (error==nil) {
@@ -176,6 +183,9 @@ bool downloadingError;
                  pageCount=oldPageCount;
              }
              downloadFlag=true;
+             if (reload) {
+                 [self.myTableView reloadData];
+             }
          }];
     });
 }
@@ -194,7 +204,7 @@ bool downloadingError;
     cell.title.text = movie.title;
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
     NSString *path=[NSString stringWithFormat: @"%@%@", moviePosterImagesDB, movie.posterPath];
-    [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img,NSError *error)
+    /*[self.provider downloadImageWithUrl:path withBlock:^(UIImage *img,NSError *error)
     {
         if (error==nil) {
             if (cell.tag == indexPath.row) {
@@ -205,7 +215,7 @@ bool downloadingError;
         else{
             NSLog(@"%@",error.description);
         }
-    }];
+    }];*/
 }
 
 -(void)updateTableWithSorting:(NSString *)sortName
@@ -218,7 +228,7 @@ bool downloadingError;
         // Update to handle the error appropriately.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
-    [self.myTableView reloadData];
+    //[self.myTableView reloadData];
 }
 
 -(void)updateTableWithGenre:(NSString *)genreName

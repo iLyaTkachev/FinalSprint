@@ -16,6 +16,7 @@ NSString * const dataBaseURL = @"http://api.themoviedb.org/3/";
 NSString * const dataBaseURLSSL = @"https://api.themoviedb.org/3/";
 NSString * const moviePosterImagesDB= @"https://image.tmdb.org/t/p/w150/";
 NSString * const moviesPopular=@"https://api.themoviedb.org/3/movie/popular?api_key=";
+NSString * const moviesTopRated=@"https://api.themoviedb.org/3/movie/top_rated?api_key=";
 NSString * const lang=@"language=en-US";
 NSString * const page=@"page";
 NSString * const movieGenres=@"https://api.themoviedb.org/3/genre/movie/list?api_key=";

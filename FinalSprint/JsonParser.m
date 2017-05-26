@@ -11,23 +11,19 @@
 
 @implementation JsonParser
 
--(void)newMovie:(Movie *)newObject from:(NSDictionary *)jsonObject withGenreDict:(NSDictionary *)dict
+-(void)newMovie:(Movie *)newObject from:(NSDictionary *)jsonObject withGenreDict:(NSDictionary *)dict withContext:(NSManagedObjectContext *)context
 {
+    newObject.posterPath = [jsonObject objectForKey:@"poster_path"];
+    newObject.overview = [jsonObject objectForKey:@"overview"];
+    newObject.releaseDate = [jsonObject objectForKey:@"release_date"];
+    newObject.title = [jsonObject objectForKey:@"title"];
+    newObject.popularity = [[jsonObject objectForKey:@"popularity"] floatValue];
+    newObject.voteAverage = [[jsonObject objectForKey:@"vote_average"] floatValue];
     
-    [newObject setValue:[jsonObject objectForKey:@"poster_path"] forKey:@"posterPath"];
-    [newObject setValue:[jsonObject objectForKey:@"overview"] forKey:@"overview"];
-    [newObject setValue:[jsonObject objectForKey:@"release_date"] forKey:@"releaseDate"];
     NSArray *genreArr=[jsonObject objectForKey:@"genre_ids"];
     for (int i=0; i<genreArr.count; i++) {
         
     }
-    //([newMovie setValue:[jsonObject objectForKey:@"genre_ids"]) forKey:@"releaseDate"];
-
-    
-    [newObject setValue:[jsonObject objectForKey:@"title"] forKey:@"title"];
-    [newObject setValue:[jsonObject objectForKey:@"popularity"] forKey:@"popularity"];
-    [newObject setValue:[jsonObject objectForKey:@"vote_average"] forKey:@"voteAverage"];
-    
 }
 
 -(void)newGenre:(NSObject *)newObject from:(NSDictionary *)jsonObject

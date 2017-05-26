@@ -58,6 +58,9 @@
     if ([text isEqualToString:self.selectedItem]) {
         cell.genre.textColor=[UIColor blueColor];
     }
+    else{
+        cell.genre.textColor=[UIColor blackColor];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
