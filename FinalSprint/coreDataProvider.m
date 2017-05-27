@@ -17,7 +17,7 @@
     
     NSMutableArray *genreObjects = [[NSMutableArray alloc]init];
     for (int i=0; i<idsArray.count; i++) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"genreID = %lld",idsArray[i]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"genreID == %@",idsArray[i]];
         request.predicate = predicate;
         NSError *error = nil;
         NSArray *objs = [context executeFetchRequest:request error:&error];
@@ -26,9 +26,6 @@
         }
         if (objs.count > 0) {
             [genreObjects addObject:objs[0]];
-            for(Genre *object in objs){
-                NSLog(@"%@",object.name);
-            }
         }
     }
     return genreObjects;

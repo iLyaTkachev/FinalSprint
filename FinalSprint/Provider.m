@@ -48,7 +48,6 @@
              __block NSArray *objArray=[[NSArray alloc]init];
              [self serializeObjectsFromData:data myBlock:^(NSArray *array,NSError *serializeError)
               {
-                  //NSArray *objArray=[[NSArray alloc]init];
                   if (serializeError==nil) {
                       if ([entity.name isEqualToString:@"Movie"]){
                           objArray=[array valueForKey:@"results"];
