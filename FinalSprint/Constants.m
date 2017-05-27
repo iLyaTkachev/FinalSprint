@@ -23,4 +23,9 @@ NSString * const movieGenres = @"https://api.themoviedb.org/3/genre/movie/list?a
 NSString * const moviesByGenres1 = @"https://api.themoviedb.org/3/genre/";
 NSString * const moviesByGenres2 = @"/movies?api_key=";
 NSString * const moviesByGenres3 = @"&language=en-US&include_adult=false&sort_by=created_at.asc";
+NSString * const movieDiscover1 = @"https://api.themoviedb.org/3/discover/movie?api_key=";
+NSString * const movieDiscover2 = @"&language=en-US&sort_by=";
+NSString * const movieDiscover3 = @".desc&include_adult=false&include_video=false&page=";
+NSString * const movieDiscover4 = @"&with_genres=";
+NSString * const comma = @"%2C";
 @end

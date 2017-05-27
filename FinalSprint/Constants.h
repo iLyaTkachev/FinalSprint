@@ -23,4 +23,9 @@ extern NSString * const moviesTopRated;
 extern NSString * const moviesByGenres1;
 extern NSString * const moviesByGenres2;
 extern NSString * const moviesByGenres3;
+extern NSString * const movieDiscover1;
+extern NSString * const movieDiscover2;
+extern NSString * const movieDiscover3;
+extern NSString * const movieDiscover4;
+extern NSString * const comma;
 @end
