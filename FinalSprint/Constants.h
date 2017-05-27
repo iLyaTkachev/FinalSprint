@@ -20,5 +20,7 @@ extern NSString * const lang;
 extern NSString * const page;
 extern NSString * const movieGenres;
 extern NSString * const moviesTopRated;
-
+extern NSString * const moviesByGenres1;
+extern NSString * const moviesByGenres2;
+extern NSString * const moviesByGenres3;
 @end

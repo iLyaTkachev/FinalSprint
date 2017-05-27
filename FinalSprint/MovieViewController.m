@@ -67,6 +67,7 @@ bool downloadingError;
     }
     [self downloadMoviesWithDeleting:true withTableReloading:false];
 }
+
 - (IBAction)genreClick:(id)sender {
     PopViewController *genreVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
     genreVC.selectedItem = self.genreKey;
@@ -76,6 +77,8 @@ bool downloadingError;
     genreVC.myBlock=^(NSString *selectedItem)
     {
         self.genreKey=selectedItem;
+        self.movieUrl = [NSString stringWithFormat: @"%@%@%@%@%@",moviesByGenres1,[self.genreDictionary allKeysForObject:selectedItem],moviesByGenres2,page];
+        NSLog(@"%@",[self.genreDictionary allKeysForObject:selectedItem]);
     };
     //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
     [self presentViewController:genreVC animated:YES completion:nil];
@@ -103,6 +106,7 @@ bool downloadingError;
     //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
     [self presentViewController:sortVC animated:YES completion:nil];
 }
+
 
 //uicollectionview; flow layout=horizontal
 //urlcache
@@ -198,7 +202,6 @@ bool downloadingError;
     Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.title.text = movie.title;
     cell.genre.text = [[[movie.genres allObjects] valueForKey:@"name"] componentsJoinedByString:@", "];
-    NSLog(@"%@",[[movie.genres allObjects] valueForKey:@"name"]);
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
     NSString *path=[NSString stringWithFormat: @"%@%@", moviePosterImagesDB, movie.posterPath];
     [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img,NSError *error)
