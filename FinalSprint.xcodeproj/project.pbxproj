@@ -13,7 +13,6 @@
 		090A7BCA1ED7A67D00708855 /* Movie+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC21ED7A67D00708855 /* Movie+CoreDataProperties.m */; };
 		090A7BCB1ED7A67D00708855 /* Genre+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC41ED7A67D00708855 /* Genre+CoreDataClass.m */; };
 		090A7BCC1ED7A67D00708855 /* Genre+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC61ED7A67D00708855 /* Genre+CoreDataProperties.m */; };
-		090A7BCF1ED82F0600708855 /* coreDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BCE1ED82F0600708855 /* coreDataProvider.m */; };
 		090A7BD21ED864C100708855 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BD11ED864C100708855 /* SearchViewController.m */; };
 		09265AE11EBB21EA00AC31CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09265AE01EBB21EA00AC31CD /* main.m */; };
 		09265AE41EBB21EA00AC31CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09265AE31EBB21EA00AC31CD /* AppDelegate.m */; };
@@ -56,8 +55,6 @@
 		090A7BC41ED7A67D00708855 /* Genre+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Genre+CoreDataClass.m"; sourceTree = "<group>"; };
 		090A7BC51ED7A67D00708855 /* Genre+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Genre+CoreDataProperties.h"; sourceTree = "<group>"; };
 		090A7BC61ED7A67D00708855 /* Genre+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Genre+CoreDataProperties.m"; sourceTree = "<group>"; };
-		090A7BCD1ED82F0600708855 /* coreDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coreDataProvider.h; sourceTree = "<group>"; };
-		090A7BCE1ED82F0600708855 /* coreDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = coreDataProvider.m; sourceTree = "<group>"; };
 		090A7BD01ED864C100708855 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		090A7BD11ED864C100708855 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		09265ADC1EBB21EA00AC31CD /* FinalSprint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalSprint.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,8 +205,6 @@
 				099F56C11ED5D770004C15FD /* JSON_Parser */,
 				0966F7661ECA3DFD00DC248F /* Provider.h */,
 				0966F7671ECA3DFD00DC248F /* Provider.m */,
-				090A7BCD1ED82F0600708855 /* coreDataProvider.h */,
-				090A7BCE1ED82F0600708855 /* coreDataProvider.m */,
 			);
 			name = Provider;
 			sourceTree = "<group>";
@@ -362,7 +357,6 @@
 				090A7BCC1ED7A67D00708855 /* Genre+CoreDataProperties.m in Sources */,
 				098524B81ED24F0A00B15D92 /* DetailViewController.m in Sources */,
 				0966F7641ECA3DA500DC248F /* URLConnection.m in Sources */,
-				090A7BCF1ED82F0600708855 /* coreDataProvider.m in Sources */,
 				09265AE11EBB21EA00AC31CD /* main.m in Sources */,
 				09603EFC1EC25A2400A02FB3 /* MovieViewController.m in Sources */,
 			);

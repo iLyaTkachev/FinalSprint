@@ -9,7 +9,6 @@
 #import "JsonParser.h"
 #import "Movie+CoreDataProperties.h"
 #import "Genre+CoreDataProperties.h"
-#import "coreDataProvider.h"
 
 @implementation JsonParser //parse json to coreData
 
@@ -23,12 +22,8 @@
     newObject.popularity = [[jsonObject objectForKey:@"popularity"] floatValue];
     newObject.voteAverage = [[jsonObject objectForKey:@"vote_average"] floatValue];
     
-    NSArray *genreObjects =[coreDataProvider getGenresFromIdsArray:[jsonObject valueForKey:@"genre_ids"] withContext:context];
-    //NSSet<Genre *> *set = [NSSet setWithArray:genreObjects];
-    for(Genre *object in genreObjects){
-        NSLog(@"%@",object.name);
-        [newObject addGenresObject:object];
-    }
+    NSArray *genreObjects =[self getGenresFromIdsArray:[jsonObject valueForKey:@"genre_ids"] withContext:context];
+    [newObject addGenres:[NSSet setWithArray:genreObjects]];
     
 }
 
@@ -37,4 +32,26 @@
     newObject.genreID = [jsonObject objectForKey:@"id"];
     newObject.name = [jsonObject objectForKey:@"name"];
 }
+
+-(NSArray *)getGenresFromIdsArray:(NSArray *)idsArray withContext:(NSManagedObjectContext *)context {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    request.entity = [NSEntityDescription entityForName:@"Genre" inManagedObjectContext:context];
+    
+    NSMutableArray *genreObjects = [[NSMutableArray alloc]init];
+    for (int i=0; i<idsArray.count; i++) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"genreID == %@",idsArray[i]];
+        request.predicate = predicate;
+        NSError *error = nil;
+        NSArray *objs = [context executeFetchRequest:request error:&error];
+        if (error) {
+            NSLog(@"%@",error);
+        }
+        if (objs.count > 0) {
+            [genreObjects addObject:objs[0]];
+        }
+    }
+    return genreObjects;
+}
+
 @end

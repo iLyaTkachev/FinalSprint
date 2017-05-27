@@ -198,6 +198,7 @@ bool downloadingError;
     Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.title.text = movie.title;
     cell.genre.text = [[[movie.genres allObjects] valueForKey:@"name"] componentsJoinedByString:@", "];
+    NSLog(@"%@",[[movie.genres allObjects] valueForKey:@"name"]);
     cell.rating.text = [NSString stringWithFormat:@"%.1f", movie.voteAverage];
     NSString *path=[NSString stringWithFormat: @"%@%@", moviePosterImagesDB, movie.posterPath];
     [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img,NSError *error)
