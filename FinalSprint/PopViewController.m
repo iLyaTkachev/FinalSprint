@@ -17,33 +17,22 @@
 
 @synthesize dataArray=dataArray;
 
--(id)initWithArray:(NSArray *)array withBlock:(void(^)()) block
-{
-    self=[super init];
-    if(self)
-    {
-        self.dataArray=array;
-        self.myBlock=block;
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // add touch recogniser to dismiss this controller
-    //UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissMe)];
-    //[self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-- (void)dismissMe {
-    
-    NSLog(@"Popover was dismissed with internal tap");
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (IBAction)doneClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController setNavigationBarHidden:YES];
+}
+- (IBAction)cancelClicked:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController setNavigationBarHidden:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -67,11 +56,7 @@
 {
     self.selectedItem=[self.dataArray objectAtIndex:indexPath.row];
     self.myBlock(self.selectedItem);
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)hideControllerButtonPressed:(UIBarButtonItem *)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
 
 @end

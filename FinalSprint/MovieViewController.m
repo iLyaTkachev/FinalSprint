@@ -81,7 +81,9 @@ bool downloadingError;
         NSLog(@"%@",[self.genreDictionary allKeysForObject:selectedItem]);
     };
     //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
-    [self presentViewController:genreVC animated:YES completion:nil];
+    //[self presentViewController:genreVC animated:YES completion:nil];
+    [self.navigationController pushViewController:genreVC animated:YES];
+    [self.navigationController setNavigationBarHidden:NO];
 }
 
 - (IBAction)sortClick:(id)sender {
@@ -104,7 +106,9 @@ bool downloadingError;
         [self downloadMoviesWithDeleting:YES withTableReloading:true];
     };
     //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
-    [self presentViewController:sortVC animated:YES completion:nil];
+    //[self presentViewController:sortVC animated:YES completion:nil];
+    [self.navigationController pushViewController:sortVC animated:YES];
+    [self.navigationController setNavigationBarHidden:NO];
 }
 
 

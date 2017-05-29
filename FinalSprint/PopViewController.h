@@ -14,6 +14,5 @@
 @property (strong, nonatomic) NSString *selectedItem;
 @property(nonatomic, copy) void(^myBlock)();
 
--(id)initWithArray:(NSArray *)array withBlock:(void(^)()) block;
 
 @end
