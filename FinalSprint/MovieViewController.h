@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PopViewController.h"
 
-@interface MovieViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,UIPopoverPresentationControllerDelegate>
+@interface MovieViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,UIPopoverPresentationControllerDelegate,myPopviewProtocol>
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @end

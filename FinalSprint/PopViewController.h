@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol myPopviewProtocol <NSObject>
+
+- (void)settingsChoosedWithResult:(NSMutableDictionary *)result;
+
+@end
+
 @interface PopViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
-@property (strong, nonatomic) NSArray *dataArray;
-@property (strong, nonatomic) NSString *selectedItem;
-@property(nonatomic, copy) void(^myBlock)();
-
+@property (nonatomic,strong) NSArray *dataArray;
+@property (nonatomic,strong) NSMutableDictionary *selectedGenreDictionary;
+@property (nonatomic, weak) id <myPopviewProtocol> delegate;
 
 @end

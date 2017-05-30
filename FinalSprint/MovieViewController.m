@@ -13,7 +13,6 @@
 #import "Movie+CoreDataClass.h"
 #import "Constants.h"
 #import "DetailViewController.h"
-#import "PopViewController.h"
 
 @interface MovieViewController ()
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -24,8 +23,9 @@
 @property(nonatomic,strong) NSString *movieUrl;
 @property(nonatomic,strong) UIImage *noImage;
 @property(nonatomic,strong) NSString *sortingKey;
-@property(nonatomic,strong) NSString *genreKey;
+@property(nonatomic,strong) NSArray *genreArray;
 @property(nonatomic,strong) NSDictionary *genreDictionary;
+@property(nonatomic,strong) NSMutableDictionary *selectedGenreDictionary;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *genreButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *sortButton;
 
@@ -58,28 +58,39 @@ bool downloadingError;
     self.movieEntity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
     self.noImage = [UIImage imageNamed:@"no_image.png"];
     self.sortingKey = @"popularity";
-    self.genreKey = @"All";
     self.genreDictionary = [self.provider getGenresDictionary];
+    
+    NSMutableArray *arr = [NSMutableArray arrayWithObject:@"All"];
+    [arr addObjectsFromArray:self.genreDictionary.allValues];
+    self.genreArray = arr;
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
+    for (NSString *genre in self.genreArray) {
+        [dict setObject:[NSNumber numberWithBool:NO] forKey:genre];
+    }
+    [self.selectedGenreDictionary setObject:[NSNumber numberWithBool:YES] forKey:@"All"];
+    self.selectedGenreDictionary = dict;
+    
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     [self downloadMoviesWithDeleting:true withTableReloading:false];
+    
 }
 
 - (IBAction)genreClick:(id)sender {
     PopViewController *genreVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
-    genreVC.selectedItem = self.genreKey;
-    NSMutableArray *arr = [NSMutableArray arrayWithObject:@"All"];
-    [arr addObjectsFromArray:self.genreDictionary.allValues];
-    genreVC.dataArray = arr;
-    genreVC.myBlock=^(NSString *selectedItem)
+    genreVC.delegate=self;
+    genreVC.selectedGenreDictionary = self.selectedGenreDictionary;
+    genreVC.dataArray = self.genreArray;
+    /*genreVC.myBlock=^(NSString *selectedItem)
     {
         self.genreKey=selectedItem;
         self.movieUrl = [NSString stringWithFormat: @"%@%@%@%@%@",moviesByGenres1,[self.genreDictionary allKeysForObject:selectedItem],moviesByGenres2,page];
         NSLog(@"%@",[self.genreDictionary allKeysForObject:selectedItem]);
-    };
+    };*/
     //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
     //[self presentViewController:genreVC animated:YES completion:nil];
     [self.navigationController pushViewController:genreVC animated:YES];
@@ -89,9 +100,9 @@ bool downloadingError;
 - (IBAction)sortClick:(id)sender {
     PopViewController *sortVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Pop"];
     NSDictionary *dict=[self.provider getSortingDictionary];
-    sortVC.selectedItem = [dict valueForKey:self.sortingKey];
+    //sortVC.selectedItem = [dict valueForKey:self.sortingKey];
     sortVC.dataArray = [dict allValues];
-    sortVC.myBlock=^(NSString *selectedItem)
+    /*sortVC.myBlock=^(NSString *selectedItem)
     {
         pageCount=1;
         if ([selectedItem isEqualToString:@"Popularity"]) {
@@ -104,11 +115,18 @@ bool downloadingError;
         }
         [self updateTableWithSorting:self.sortingKey];
         [self downloadMoviesWithDeleting:YES withTableReloading:true];
-    };
+    };*/
     //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
     //[self presentViewController:sortVC animated:YES completion:nil];
     [self.navigationController pushViewController:sortVC animated:YES];
     [self.navigationController setNavigationBarHidden:NO];
+}
+
+- (void)settingsChoosedWithResult:(NSMutableDictionary *)result{
+    self.selectedGenreDictionary = result;
+    if ([[self.selectedGenreDictionary valueForKey:@"All"]boolValue]) {
+        <#statements#>
+    }
 }
 
 

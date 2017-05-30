@@ -10,7 +10,7 @@
 #import "PopTableViewCell.h"
 
 @interface PopViewController ()
-
+@property (nonatomic,strong) NSMutableDictionary *oldDict;
 @end
 
 @implementation PopViewController
@@ -20,6 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // add touch recogniser to dismiss this controller
+    self.oldDict = [self.selectedGenreDictionary mutableCopy];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,10 +30,12 @@
 - (IBAction)doneClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
     [self.navigationController setNavigationBarHidden:YES];
+    [self.delegate settingsChoosedWithResult:self.selectedGenreDictionary];
 }
 - (IBAction)cancelClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
     [self.navigationController setNavigationBarHidden:YES];
+    [self.delegate settingsChoosedWithResult:self.oldDict];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -41,10 +44,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PopTableViewCell *cell = (PopTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    PopTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     NSString *text = [dataArray objectAtIndex:indexPath.row];
     cell.genre.text = text;
-    if ([text isEqualToString:self.selectedItem]) {
+    if ([[self.selectedGenreDictionary objectForKey:text] boolValue]) {
         cell.genre.textColor=[UIColor blueColor];
     }
     else{
@@ -54,8 +57,24 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.selectedItem=[self.dataArray objectAtIndex:indexPath.row];
-    self.myBlock(self.selectedItem);
+    NSString *text = [self.dataArray objectAtIndex:indexPath.row];
+    bool value=[[self.selectedGenreDictionary valueForKey:text] boolValue];
+    if (value) {
+        [self.selectedGenreDictionary setObject:[NSNumber numberWithBool:NO] forKey:text];
+    }
+    else if(!value && ![text isEqualToString:@"All"]){
+        [self.selectedGenreDictionary setObject:[NSNumber numberWithBool:YES] forKey:text];
+        [self.selectedGenreDictionary setObject:[NSNumber numberWithBool:NO] forKey:@"All"];
+    }
+    else if (!value && [text isEqualToString:@"All"])
+    {
+        for (NSString *genre in [self.selectedGenreDictionary allKeys]) {
+            [self.selectedGenreDictionary setObject:[NSNumber numberWithBool:NO] forKey:genre];
+        }
+        [self.selectedGenreDictionary setObject:[NSNumber numberWithBool:YES] forKey:@"All"];
+        
+    }
+    [self.myTableView reloadData];
 }
 
 
