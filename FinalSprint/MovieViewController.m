@@ -85,14 +85,6 @@ bool downloadingError;
     genreVC.delegate=self;
     genreVC.selectedGenreDictionary = self.selectedGenreDictionary;
     genreVC.dataArray = self.genreArray;
-    /*genreVC.myBlock=^(NSString *selectedItem)
-    {
-        self.genreKey=selectedItem;
-        self.movieUrl = [NSString stringWithFormat: @"%@%@%@%@%@",moviesByGenres1,[self.genreDictionary allKeysForObject:selectedItem],moviesByGenres2,page];
-        NSLog(@"%@",[self.genreDictionary allKeysForObject:selectedItem]);
-    };*/
-    //sortVC.modalPresentationStyle = UIActionSheetStyleDefault;
-    //[self presentViewController:genreVC animated:YES completion:nil];
     [self.navigationController pushViewController:genreVC animated:YES];
     [self.navigationController setNavigationBarHidden:NO];
 }
@@ -110,7 +102,7 @@ bool downloadingError;
             self.movieUrl = [NSString stringWithFormat: @"%@%@&%@&%@",moviesPopular,apiV3Key,lang,page];
         }
         else{
-            self.sortingKey=@"voteAverage";
+            self.sortingKey=@"vote_average.desc";
             self.movieUrl = [NSString stringWithFormat: @"%@%@&%@&%@",moviesTopRated,apiV3Key,lang,page];
         }
         [self updateTableWithSorting:self.sortingKey];
@@ -122,10 +114,18 @@ bool downloadingError;
     [self.navigationController setNavigationBarHidden:NO];
 }
 
-- (void)settingsChoosedWithResult:(NSMutableDictionary *)result{
+- (void)settingsChoosedWithResult:(NSMutableDictionary *)result cancelled:(BOOL)flag{
     self.selectedGenreDictionary = result;
-    if ([[self.selectedGenreDictionary valueForKey:@"All"]boolValue]) {
-        <#statements#>
+    if (!flag) {
+        pageCount=1;
+        
+        if ([[self.selectedGenreDictionary valueForKey:@"All"]boolValue]) {
+            self.movieUrl = [NSString stringWithFormat: @"%@%@%@%@%@%d",movieDiscover1,apiV3Key,movieDiscover2,self.sortingKey,movieDiscover3,pageCount];
+        }
+        else{
+            self.movieUrl = [NSString stringWithFormat: @"%@%@%@%@%@%d%@%@",movieDiscover1,apiV3Key,movieDiscover2,self.sortingKey,movieDiscover3,pageCount,movieDiscover4,[self.provider getUrlPartFromGenres:self.selectedGenreDictionary]];
+        }
+        [self downloadMoviesWithDeleting:YES withTableReloading:true];
     }
 }
 
@@ -168,6 +168,7 @@ bool downloadingError;
             {
                 NSLog(@"downloading");
                 [self.activityIndicator startAnimating];
+                self.movieUrl = [NSString stringWithFormat: @"%@%@%@%@%@%d%@%@",movieDiscover1,apiV3Key,movieDiscover2,self.sortingKey,movieDiscover3,pageCount,movieDiscover4,[self.provider getUrlPartFromGenres:self.selectedGenreDictionary]];
                 [self downloadMoviesWithDeleting:false withTableReloading:false];
             }
     }
@@ -179,6 +180,7 @@ bool downloadingError;
                 [self.activityIndicator startAnimating];
                 oldPageCount=pageCount;
                 pageCount=1;
+                self.movieUrl = [NSString stringWithFormat: @"%@%@%@%@%@%d%@%@",movieDiscover1,apiV3Key,movieDiscover2,self.sortingKey,movieDiscover3,pageCount,movieDiscover4,[self.provider getUrlPartFromGenres:self.selectedGenreDictionary]];
                 [self downloadMoviesWithDeleting:true withTableReloading:false];
             }
     }
@@ -190,8 +192,8 @@ bool downloadingError;
     downloadFlag = false;
     downloadFlag=false;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        NSString *url=[NSString stringWithFormat: @"%@=%d",self.movieUrl,pageCount];
-        [self.provider updateContextWithEntity:self.movieEntity withUrl:url withDeleting:mode withBlock:^(NSError *error)
+        //NSString *url=[NSString stringWithFormat: @"%@=%d",self.movieUrl,pageCount];
+        [self.provider updateContextWithEntity:self.movieEntity withUrl:self.movieUrl withDeleting:mode withBlock:^(NSError *error)
          {
              if (error==nil) {
                  downloadingError=false;
@@ -253,9 +255,8 @@ bool downloadingError;
     //[self.myTableView reloadData];
 }
 
--(void)updateTableWithGenre:(NSString *)genreName
+/*-(void)updateTableWithGenre
 {
-    self.genreKey=genreName;
     NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:genreName ascending:NO];
     [[self.fetchedResultsController fetchRequest]setSortDescriptors:[NSArray arrayWithObject:sort]];
     NSError *error;
@@ -264,7 +265,7 @@ bool downloadingError;
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     [self.myTableView reloadData];
-}
+}*/
 
 
 

@@ -17,6 +17,7 @@
 -(id)initWithContext:(NSManagedObjectContext *)context;
 -(void)updateContextWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block;
 -(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *,NSError *)) block;
+-(NSString *)getUrlPartFromGenres:(NSMutableDictionary *)selectedGenres;
 -(NSDictionary *)getSortingDictionary;
 -(NSDictionary *)getGenresDictionary;
 

@@ -14,8 +14,13 @@
 
 -(void)newMovie:(Movie *)newObject from:(NSDictionary *)jsonObject withGenreDict:(NSDictionary *)dict withContext:(NSManagedObjectContext *)context
 {
-    
-    newObject.posterPath = [jsonObject objectForKey:@"poster_path"];
+    @try {
+        newObject.posterPath = [jsonObject objectForKey:@"poster_path"];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception.reason);
+    }
+
     newObject.overview = [jsonObject objectForKey:@"overview"];
     newObject.releaseDate = [jsonObject objectForKey:@"release_date"];
     newObject.title = [jsonObject objectForKey:@"title"];

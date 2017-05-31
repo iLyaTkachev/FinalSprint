@@ -30,12 +30,12 @@
 - (IBAction)doneClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
     [self.navigationController setNavigationBarHidden:YES];
-    [self.delegate settingsChoosedWithResult:self.selectedGenreDictionary];
+    [self.delegate settingsChoosedWithResult:self.selectedGenreDictionary cancelled:NO];
 }
 - (IBAction)cancelClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
     [self.navigationController setNavigationBarHidden:YES];
-    [self.delegate settingsChoosedWithResult:self.oldDict];
+    [self.delegate settingsChoosedWithResult:self.oldDict cancelled:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

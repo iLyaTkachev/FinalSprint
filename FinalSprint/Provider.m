@@ -251,7 +251,7 @@
 -(NSDictionary *)getSortingDictionary{
     NSMutableDictionary *dict=[NSMutableDictionary dictionary];
     [dict setValue:@"Popularity" forKey:@"popularity"];
-    [dict setValue:@"Top Rated" forKey:@"voteAverage"];
+    [dict setValue:@"Top Rated" forKey:@"vote_Average"];
     return dict;
 }
 
@@ -279,4 +279,15 @@
          }
      }];
 }
+
+-(NSString *)getUrlPartFromGenres:(NSMutableDictionary *)selectedGenres{
+    NSArray *arr = [selectedGenres allKeysForObject:[NSNumber numberWithBool:YES]];
+    NSMutableArray *newArray = [[NSMutableArray alloc]init];
+    for (NSString *genre in arr) {
+        [newArray addObjectsFromArray: [self.genreDict allKeysForObject:genre]];
+    }
+    NSString *str = [newArray componentsJoinedByString:comma];
+    return str;
+}
+
 @end

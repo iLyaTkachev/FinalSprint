@@ -10,7 +10,7 @@
 
 @protocol myPopviewProtocol <NSObject>
 
-- (void)settingsChoosedWithResult:(NSMutableDictionary *)result;
+- (void)settingsChoosedWithResult:(NSMutableDictionary *)result cancelled:(BOOL) flag;
 
 @end
 
