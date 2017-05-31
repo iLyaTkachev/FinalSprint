@@ -29,4 +29,8 @@ NSString * const movieDiscover2 = @"&language=en-US&sort_by=";
 NSString * const movieDiscover3 = @".desc&include_adult=false&include_video=false&page=";
 NSString * const movieDiscover4 = @"&with_genres=";
 NSString * const comma = @"%2C";
+NSString * const movieSearch1 = @"https://api.themoviedb.org/3/search/movie?api_key=";
+NSString * const movieSearch2 = @"&language=en-US&query=";
+NSString * const movieSearch3 = @"&page=";
+NSString * const movieSearch4 = @"&include_adult=false";
 @end

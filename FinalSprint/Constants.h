@@ -29,4 +29,8 @@ extern NSString * const movieDiscover2;
 extern NSString * const movieDiscover3;
 extern NSString * const movieDiscover4;
 extern NSString * const comma;
+extern NSString * const movieSearch1;
+extern NSString * const movieSearch2;
+extern NSString * const movieSearch3;
+extern NSString * const movieSearch4;
 @end

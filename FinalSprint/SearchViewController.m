@@ -8,10 +8,20 @@
 
 #import "SearchViewController.h"
 #import "MovieTableViewCell.h"
+#import "Constants.h"
+#import "AppDelegate.h"
+#import "Provider.h"
+#import "Movie+CoreDataClass.h"
+#import "DetailViewController.h"
 
 @interface SearchViewController ()
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-
+@property (nonatomic,strong) Provider *provider;
+@property(nonatomic,strong) NSEntityDescription *movieEntity;
+@property(nonatomic,strong) NSString *movieUrl;
+@property(nonatomic,strong) NSArray *genreArray;
+@property(nonatomic,strong) NSDictionary *genreDictionary;
+@property(nonatomic,strong) NSArray *movieArray;
 @end
 
 @implementation SearchViewController
@@ -31,6 +41,8 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
+    NSLog(@"%@", [searchBar text]);
+    
 }
 - (void) dismissKeyboard
 {

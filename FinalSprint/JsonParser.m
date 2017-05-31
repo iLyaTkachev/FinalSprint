@@ -26,6 +26,12 @@
     newObject.title = [jsonObject objectForKey:@"title"];
     newObject.popularity = [[jsonObject objectForKey:@"popularity"] floatValue];
     newObject.voteAverage = [[jsonObject objectForKey:@"vote_average"] floatValue];
+    @try {
+        newObject.backdropPath = [jsonObject objectForKey:@"backdrop_path"];
+    } @catch (NSException *exception) {
+        NSLog(@"Error in backDrop");
+    }
+    
     
     NSArray *genreObjects =[self getGenresFromIdsArray:[jsonObject valueForKey:@"genre_ids"] withContext:context];
     [newObject addGenres:[NSSet setWithArray:genreObjects]];

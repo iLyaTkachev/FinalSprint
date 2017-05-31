@@ -14,6 +14,10 @@
 @interface DetailViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *objectTitle;
 @property (strong, nonatomic) IBOutlet UIImageView *backImage;
+@property (strong, nonatomic) IBOutlet UILabel *date;
+@property (strong, nonatomic) IBOutlet UILabel *rating;
+@property (strong, nonatomic) IBOutlet UILabel *overview;
+@property (strong, nonatomic) IBOutlet UILabel *genres;
 @property (nonatomic,strong) Provider *provider;
 @end
 
@@ -36,17 +40,29 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
+- (IBAction)addClick:(id)sender {
+}
 
--(void)configureVCwithObject:(NSObject *)object withObjectType:(NSString *)type{
+-(void)configureVCwithObject:(NSObject *)object withObjectType:(NSString *)type {
+    
     self.provider = [[Provider alloc]init];
     if ([type isEqualToString:@"Movie"]) {
-        self.objectTitle.text=[object valueForKey:@"title"];
-        NSString *path=[NSString stringWithFormat: @"%@%@", movieBackImagesDB, [object valueForKey:@"poster_path"]];
-        [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img,NSError *error)
+        self.objectTitle.text = [object valueForKey:@"title"];
+        self.date.text = [object valueForKey:@"releaseDate"];
+        self.rating.text = [NSString stringWithFormat:@"%.1f", [[object valueForKey:@"voteAverage"] floatValue]];
+        self.overview.text = [object valueForKey:@"overview"];
+        self.genres.text = [[[[object valueForKey:@"genres"] allObjects] valueForKey:@"name"] componentsJoinedByString:@", "];
+        
+        NSString *path=[NSString stringWithFormat: @"%@%@", movieBackImagesDB, [object valueForKey:@"backdropPath"]];
+        [self.provider downloadImageWithoutSavingWithUrl:path withBlock:^(UIImage *img,NSError *error)
          {
              if (error==nil)
              {
-                 self.backImage.image = img;
+                 @try {
+                     self.backImage.image = img;
+                 } @catch (NSException *exception) {
+                     NSLog(@"Error in back image");
+                 }
              }
              
              else{

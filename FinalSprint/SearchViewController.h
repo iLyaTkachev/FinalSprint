@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchViewController : UIViewController<UISearchBarDelegate,UITableViewDelegate, UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
+
 
 @end

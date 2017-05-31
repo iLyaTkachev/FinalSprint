@@ -14,6 +14,7 @@
 		090A7BCB1ED7A67D00708855 /* Genre+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC41ED7A67D00708855 /* Genre+CoreDataClass.m */; };
 		090A7BCC1ED7A67D00708855 /* Genre+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BC61ED7A67D00708855 /* Genre+CoreDataProperties.m */; };
 		090A7BD21ED864C100708855 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090A7BD11ED864C100708855 /* SearchViewController.m */; };
+		092595B51EDF25DC00ED7971 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 092595B41EDF25DC00ED7971 /* star.png */; };
 		09265AE11EBB21EA00AC31CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09265AE01EBB21EA00AC31CD /* main.m */; };
 		09265AE41EBB21EA00AC31CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09265AE31EBB21EA00AC31CD /* AppDelegate.m */; };
 		09265AEA1EBB21EA00AC31CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09265AE81EBB21EA00AC31CD /* Main.storyboard */; };
@@ -60,6 +61,7 @@
 		090A7BC61ED7A67D00708855 /* Genre+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Genre+CoreDataProperties.m"; sourceTree = "<group>"; };
 		090A7BD01ED864C100708855 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		090A7BD11ED864C100708855 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		092595B41EDF25DC00ED7971 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		09265ADC1EBB21EA00AC31CD /* FinalSprint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalSprint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09265AE01EBB21EA00AC31CD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		09265AE21EBB21EA00AC31CD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		099F56BD1ED5C632004C15FD /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				092595B41EDF25DC00ED7971 /* star.png */,
 				09569EAA1EDC3F9000A2559E /* movie-icon-15138.png */,
 				099F56B61ED5BFED004C15FD /* no_image.png */,
 				099F56BA1ED5C024004C15FD /* star_empty.png */,
@@ -338,6 +341,7 @@
 				099F56B31ED5BF9A004C15FD /* hourglass.png in Resources */,
 				09265AEF1EBB21EA00AC31CD /* Assets.xcassets in Resources */,
 				099F56AF1ED5BF54004C15FD /* hearts_filled.png in Resources */,
+				092595B51EDF25DC00ED7971 /* star.png in Resources */,
 				099F56B91ED5C00F004C15FD /* star_filled.png in Resources */,
 				09265B041EBC4D8D00AC31CD /* monitor.png in Resources */,
 				099F56A91ED5B829004C15FD /* user_icon_bar.png in Resources */,
