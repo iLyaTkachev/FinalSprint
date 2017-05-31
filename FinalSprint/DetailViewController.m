@@ -8,10 +8,13 @@
 
 #import "DetailViewController.h"
 #import "Movie+CoreDataProperties.h"
+#import "Provider.h"
+#import "Constants.h"
 
 @interface DetailViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *objectTitle;
-
+@property (strong, nonatomic) IBOutlet UIImageView *backImage;
+@property (nonatomic,strong) Provider *provider;
 @end
 
 @implementation DetailViewController
@@ -20,6 +23,8 @@
     [super viewDidLoad];
     NSLog(@"details is loaded");
     
+
+
     // Do any additional setup after loading the view.
 }
 
@@ -33,9 +38,21 @@
 }
 
 -(void)configureVCwithObject:(NSObject *)object withObjectType:(NSString *)type{
+    self.provider = [[Provider alloc]init];
     if ([type isEqualToString:@"Movie"]) {
         self.objectTitle.text=[object valueForKey:@"title"];
-        
+        NSString *path=[NSString stringWithFormat: @"%@%@", movieBackImagesDB, [object valueForKey:@"poster_path"]];
+        [self.provider downloadImageWithUrl:path withBlock:^(UIImage *img,NSError *error)
+         {
+             if (error==nil)
+             {
+                 self.backImage.image = img;
+             }
+             
+             else{
+                 NSLog(@"%@",error.description);
+             }
+         }];
     }
 }
 /*

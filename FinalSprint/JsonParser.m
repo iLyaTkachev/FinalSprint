@@ -29,7 +29,6 @@
     
     NSArray *genreObjects =[self getGenresFromIdsArray:[jsonObject valueForKey:@"genre_ids"] withContext:context];
     [newObject addGenres:[NSSet setWithArray:genreObjects]];
-    
 }
 
 -(void)newGenre:(Genre *)newObject from:(NSDictionary *)jsonObject
