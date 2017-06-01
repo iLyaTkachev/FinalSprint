@@ -190,7 +190,6 @@ bool downloadingError;
 -(void)downloadMoviesWithDeleting:(bool)mode withTableReloading:(bool)reload
 {
     downloadFlag = false;
-    downloadFlag=false;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //NSString *url=[NSString stringWithFormat: @"%@=%d",self.movieUrl,pageCount];
         [self.provider updateContextWithEntity:self.movieEntity withUrl:self.movieUrl withDeleting:mode withBlock:^(NSError *error)

@@ -16,15 +16,22 @@
 
 @interface SearchViewController ()
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic,strong) Provider *provider;
 @property(nonatomic,strong) NSEntityDescription *movieEntity;
 @property(nonatomic,strong) NSString *movieUrl;
-@property(nonatomic,strong) NSArray *genreArray;
+@property(nonatomic,strong) NSMutableArray *genreArray;
 @property(nonatomic,strong) NSDictionary *genreDictionary;
 @property(nonatomic,strong) NSArray *movieArray;
+@property(nonatomic,strong) UIImage *noImage;
 @end
 
 @implementation SearchViewController
+
+int pageCount;
+int oldPageCount;
+bool downloadFlag;
+bool downloadingError;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,6 +41,23 @@
     [self.view addGestureRecognizer:tap];
 }
 
+-(void)initElements
+{
+    AppDelegate* delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    self.context = delegate.managedObjectContext;
+    self.provider = [[Provider alloc]initWithContext:delegate.managedObjectContext];
+    pageCount = 1;
+    downloadFlag = true;
+    downloadingError = false;
+    self.movieEntity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
+    self.noImage = [UIImage imageNamed:@"no_image.png"];
+    self.genreDictionary = [self.provider getGenresDictionary];
+    NSMutableArray *arr = [NSMutableArray arrayWithObject:@"All"];
+    [arr addObjectsFromArray:self.genreDictionary.allValues];
+    self.genreArray = arr;
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -42,7 +66,10 @@
 {
     [searchBar resignFirstResponder];
     NSLog(@"%@", [searchBar text]);
-    
+    pageCount=1;
+    self.movieArray = [[NSMutableArray alloc]init];
+    self.movieUrl = [NSString stringWithFormat: @"%@%@%@%@%@%d%@",movieSearch1,apiV3Key,movieSearch2,[searchBar text],movieSearch3,pageCount,movieSearch4];
+    [self downloadMoviesWithTableReloading:YES];
 }
 - (void) dismissKeyboard
 {
@@ -57,6 +84,31 @@
     MovieTableViewCell *cell = (MovieTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"MovieCell" forIndexPath:indexPath];
     return cell;
 }
+
+-(void)downloadMoviesWithTableReloading:(bool)reload
+{
+    downloadFlag = false;
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        //NSString *url=[NSString stringWithFormat: @"%@=%d",self.movieUrl,pageCount];
+        [self.provider getObjectsFromURL:self.movieUrl forEntity:self.movieEntity withBlock:^(NSArray *arr,NSError *error)
+         {
+             if (error==nil) {
+                 [self.movieArray arrayByAddingObjectsFromArray:arr];
+                 downloadingError=false;
+                 pageCount++;
+             } else {
+                 NSLog(@"Updating error: %@",error.description);
+                 downloadingError=true;
+                 pageCount=oldPageCount;
+             }
+             downloadFlag=true;
+             if (reload) {
+                 [self.myTableView reloadData];
+             }
+         }];
+    });
+}
+
 
 
 /*

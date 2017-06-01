@@ -18,6 +18,7 @@
 -(void)updateContextWithEntity:(NSEntityDescription *)entity withUrl:(NSString *)url withDeleting:(bool)mode withBlock: (void(^)(NSError *)) block;
 -(void)downloadImageWithUrl:(NSString *)url withBlock:(void(^)(UIImage *,NSError *)) block;
 -(void)downloadImageWithoutSavingWithUrl:(NSString *)url withBlock:(void(^)(UIImage *,NSError *)) block;
+-(void)getObjectsFromURL:(NSString *)urlAdress forEntity:(NSEntityDescription *)entity withBlock: (void(^)(NSArray *, NSError *)) block;
 -(NSString *)getUrlPartFromGenres:(NSMutableDictionary *)selectedGenres;
 -(NSDictionary *)getSortingDictionary;
 -(NSDictionary *)getGenresDictionary;
