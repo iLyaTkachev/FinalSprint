@@ -43,13 +43,10 @@ bool downloadingError;
 
 -(void)initElements
 {
-    AppDelegate* delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    self.context = delegate.managedObjectContext;
-    self.provider = [[Provider alloc]initWithContext:delegate.managedObjectContext];
+    self.provider = [[Provider alloc]init];
     pageCount = 1;
     downloadFlag = true;
     downloadingError = false;
-    self.movieEntity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.context];
     self.noImage = [UIImage imageNamed:@"no_image.png"];
     self.genreDictionary = [self.provider getGenresDictionary];
     NSMutableArray *arr = [NSMutableArray arrayWithObject:@"All"];
@@ -90,7 +87,7 @@ bool downloadingError;
     downloadFlag = false;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //NSString *url=[NSString stringWithFormat: @"%@=%d",self.movieUrl,pageCount];
-        [self.provider getObjectsFromURL:self.movieUrl forEntity:self.movieEntity withBlock:^(NSArray *arr,NSError *error)
+        [self.provider getObjectsFromURL:self.movieUrl forEntity:nil withBlock:^(NSArray *arr,NSError *error)
          {
              if (error==nil) {
                  [self.movieArray arrayByAddingObjectsFromArray:arr];
